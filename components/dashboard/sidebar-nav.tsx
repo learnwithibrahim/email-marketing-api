@@ -30,12 +30,23 @@ export function SidebarNav() {
   const pathname = usePathname()
 
   return (
-    <aside className="hidden lg:flex flex-col w-64 border-r border-border bg-card min-h-screen">
-      <div className="flex items-center gap-2 px-6 py-5 border-b border-border">
-        <Mail className="h-7 w-7 text-primary" />
-        <span className="text-lg font-bold text-foreground">Adbiys Campaign</span>
+    <aside className="hidden lg:flex flex-col w-64 border-r border-border/50 bg-gradient-to-b from-card to-background min-h-screen sticky top-0">
+      {/* Logo */}
+      <div className="flex items-center gap-3 px-6 py-5 border-b border-border/50">
+        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-primary/80 shadow-lg shadow-primary/25">
+          <Mail className="h-5 w-5 text-white" />
+        </div>
+        <div className="flex flex-col">
+          <span className="text-lg font-bold text-foreground">MailPilot</span>
+          <span className="text-xs text-muted-foreground">Email Marketing</span>
+        </div>
       </div>
+      
+      {/* Navigation */}
       <nav className="flex-1 flex flex-col gap-1 p-4" role="navigation" aria-label="Dashboard navigation">
+        <div className="mb-2 px-3">
+          <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground/70">Menu</p>
+        </div>
         {navItems.map((item) => {
           const isActive = item.href === "/dashboard"
             ? pathname === "/dashboard"
@@ -45,25 +56,30 @@ export function SidebarNav() {
               key={item.href}
               href={item.href}
               className={cn(
-                "flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors",
+                "flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all duration-200",
                 isActive
-                  ? "bg-primary/10 text-primary"
+                  ? "bg-gradient-to-r from-primary/10 to-primary/5 text-primary border border-primary/20"
                   : "text-muted-foreground hover:bg-accent hover:text-foreground"
               )}
             >
-              <item.icon className="h-4.5 w-4.5" />
+              <item.icon className={cn("h-5 w-5", isActive && "text-primary")} />
               {item.label}
+              {isActive && (
+                <div className="ml-auto w-1.5 h-1.5 rounded-full bg-primary" />
+              )}
             </Link>
           )
         })}
       </nav>
-      <div className="p-4 border-t border-border">
+      
+      {/* Footer */}
+      <div className="p-4 border-t border-border/50">
         <form action={logoutAction}>
           <button
             type="submit"
             className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-muted-foreground hover:bg-destructive/10 hover:text-destructive transition-colors w-full"
           >
-            <LogOut className="h-4.5 w-4.5" />
+            <LogOut className="h-5 w-5" />
             Sign out
           </button>
         </form>

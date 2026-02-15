@@ -1,70 +1,153 @@
+import Link from "next/link"
+import { Mail, Twitter, Github, Linkedin } from "lucide-react"
+
 export default function Footer() {
+  const footerLinks = {
+    product: [
+      { label: "Features", href: "#features" },
+      { label: "Pricing", href: "#pricing" },
+      { label: "Integrations", href: "#integrations" },
+      { label: "Changelog", href: "#changelog" },
+    ],
+    company: [
+      { label: "About", href: "#about" },
+      { label: "Blog", href: "#blog" },
+      { label: "Careers", href: "#careers" },
+      { label: "Contact", href: "#contact" },
+    ],
+    resources: [
+      { label: "Documentation", href: "#docs" },
+      { label: "API Reference", href: "#api" },
+      { label: "Help Center", href: "#help" },
+      { label: "Status", href: "#status" },
+    ],
+    legal: [
+      { label: "Privacy Policy", href: "#privacy" },
+      { label: "Terms of Service", href: "#terms" },
+      { label: "Cookie Policy", href: "#cookies" },
+    ],
+  }
+
   return (
-    <footer className="bg-zinc-950 text-zinc-400 py-20 px-8 border-t border-zinc-800">
-      <div className="container mx-auto grid grid-cols-1 md:grid-cols-4 gap-12">
-        
-        {/* Brand Column */}
-        <div className="space-y-6">
-          <h3 className="text-white text-lg font-black tracking-tighter uppercase">
-            MAILPILOT
-          </h3>
-          <p className="text-sm leading-relaxed max-w-xs">
-            Precision-engineered email infrastructure for the modern enterprise. 
-            Built for speed, designed for clarity.
-          </p>
-        </div>
+    <footer className="bg-background border-t border-border/50">
+      <div className="container mx-auto px-4 md:px-8 py-16">
+        {/* Main Footer Content */}
+        <div className="grid grid-cols-2 md:grid-cols-6 gap-8 mb-12">
+          {/* Brand Column */}
+          <div className="col-span-2">
+            <Link href="/" className="flex items-center gap-2.5 mb-4">
+              <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br from-primary to-primary/80 shadow-lg">
+                <Mail className="h-4.5 w-4.5 text-white" />
+              </div>
+              <span className="text-lg font-bold">MailPilot</span>
+            </Link>
+            <p className="text-sm text-muted-foreground mb-6 max-w-xs">
+              The modern email marketing platform for growing businesses. 
+              Create, automate, and track your campaigns with ease.
+            </p>
+            {/* Social Links */}
+            <div className="flex gap-3">
+              <a
+                href="#"
+                className="flex h-9 w-9 items-center justify-center rounded-lg bg-muted hover:bg-muted/80 transition-colors"
+                aria-label="Twitter"
+              >
+                <Twitter className="h-4 w-4" />
+              </a>
+              <a
+                href="#"
+                className="flex h-9 w-9 items-center justify-center rounded-lg bg-muted hover:bg-muted/80 transition-colors"
+                aria-label="GitHub"
+              >
+                <Github className="h-4 w-4" />
+              </a>
+              <a
+                href="#"
+                className="flex h-9 w-9 items-center justify-center rounded-lg bg-muted hover:bg-muted/80 transition-colors"
+                aria-label="LinkedIn"
+              >
+                <Linkedin className="h-4 w-4" />
+              </a>
+            </div>
+          </div>
 
-        {/* Product Column */}
-        <div>
-          <h4 className="text-white text-[13px] font-bold uppercase tracking-[0.2em] mb-8">
-            Product
-          </h4>
-          <ul className="space-y-4 text-[13px] uppercase tracking-wider">
-            <li><a href="#" className="hover:text-white transition-colors">Email Marketing</a></li>
-            <li><a href="#" className="hover:text-white transition-colors">Automations</a></li>
-            <li><a href="#" className="hover:text-white transition-colors">Integrations</a></li>
-          </ul>
-        </div>
+          {/* Product */}
+          <div>
+            <h4 className="font-semibold text-foreground mb-4">Product</h4>
+            <ul className="space-y-3">
+              {footerLinks.product.map((link) => (
+                <li key={link.label}>
+                  <a
+                    href={link.href}
+                    className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                  >
+                    {link.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
 
-        {/* Company Column */}
-        <div>
-          <h4 className="text-white text-[13px] font-bold uppercase tracking-[0.2em] mb-8">
-            Company
-          </h4>
-          <ul className="space-y-4 text-[13px] uppercase tracking-wider">
-            <li><a href="#" className="hover:text-white transition-colors">About</a></li>
-            <li><a href="#" className="hover:text-white transition-colors">Careers</a></li>
-            <li><a href="#" className="hover:text-white transition-colors">Contact</a></li>
-          </ul>
-        </div>
+          {/* Company */}
+          <div>
+            <h4 className="font-semibold text-foreground mb-4">Company</h4>
+            <ul className="space-y-3">
+              {footerLinks.company.map((link) => (
+                <li key={link.label}>
+                  <a
+                    href={link.href}
+                    className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                  >
+                    {link.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
 
-        {/* Subscribe Column - No Rounding, Sharp Input */}
-        <div>
-          <h4 className="text-white text-[13px] font-bold uppercase tracking-[0.2em] mb-8">
-            Newsletter
-          </h4>
-          <div className="flex flex-col gap-4">
-            <input 
-              type="email" 
-              placeholder="EMAIL ADDRESS"
-              className="bg-transparent border border-zinc-700 px-4 py-3 text-[12px] focus:outline-none focus:border-white transition-colors text-white uppercase tracking-widest"
-            />
-            <button className="bg-white text-black px-4 py-3 text-[12px] font-bold uppercase tracking-widest hover:bg-zinc-200 transition-colors">
-              Subscribe
-            </button>
+          {/* Resources */}
+          <div>
+            <h4 className="font-semibold text-foreground mb-4">Resources</h4>
+            <ul className="space-y-3">
+              {footerLinks.resources.map((link) => (
+                <li key={link.label}>
+                  <a
+                    href={link.href}
+                    className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                  >
+                    {link.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Legal */}
+          <div>
+            <h4 className="font-semibold text-foreground mb-4">Legal</h4>
+            <ul className="space-y-3">
+              {footerLinks.legal.map((link) => (
+                <li key={link.label}>
+                  <a
+                    href={link.href}
+                    className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                  >
+                    {link.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
 
-      </div>
-
-      {/* Bottom Bar */}
-      <div className="container mx-auto mt-20 pt-8 border-t border-zinc-900 flex flex-col md:flex-row justify-between items-center gap-4">
-        <div className="text-[11px] uppercase tracking-[0.3em]">
-          © 2026 MailPilot. All rights reserved.
-        </div>
-        <div className="flex gap-8 text-[11px] uppercase tracking-[0.2em]">
-          <a href="#" className="hover:text-white">Privacy Policy</a>
-          <a href="#" className="hover:text-white">Terms of Service</a>
+        {/* Bottom Bar */}
+        <div className="pt-8 border-t border-border/50 flex flex-col md:flex-row justify-between items-center gap-4">
+          <p className="text-sm text-muted-foreground">
+            © {new Date().getFullYear()} MailPilot. All rights reserved.
+          </p>
+          <p className="text-sm text-muted-foreground">
+            Made with ♥ for modern marketers
+          </p>
         </div>
       </div>
     </footer>
