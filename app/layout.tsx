@@ -1,0 +1,33 @@
+import type { Metadata, Viewport } from "next"
+import { Inter } from "next/font/google"
+import { Toaster } from "sonner"
+
+import "./globals.css"
+
+const _inter = Inter({ subsets: ["latin"], variable: "--font-inter" })
+
+export const metadata: Metadata = {
+  title: "MailPilot - Email Marketing Dashboard",
+  description: "Professional email marketing platform. Create campaigns, manage subscribers, and track analytics.",
+}
+
+export const viewport: Viewport = {
+  themeColor: "#4A6CF7",
+  width: "device-width",
+  initialScale: 1,
+}
+
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode
+}>) {
+  return (
+    <html lang="en">
+      <body className="font-sans antialiased">
+        {children}
+        <Toaster richColors position="top-right" />
+      </body>
+    </html>
+  )
+}
