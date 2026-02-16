@@ -1,115 +1,124 @@
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { ArrowRight, CheckCircle2, Zap, Shield, BarChart3 } from "lucide-react"
+import { ArrowRight, CheckSquare, Zap, Shield, BarChart3, TrendingUp } from "lucide-react"
 
 export default function Hero() {
   return (
-    <section className="relative overflow-hidden">
-      {/* Background gradient */}
-      <div className="absolute inset-0 bg-gradient-to-b from-primary/5 via-transparent to-transparent" />
-      
-      {/* Animated gradient orbs */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-gradient-to-b from-primary/20 to-transparent blur-3xl opacity-50" />
-      
+    <section className="relative overflow-hidden border-b border-border">
+      {/* Technical Grid Background */}
+      <div className="absolute inset-0" />
+       <div
+    className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+    style={{ backgroundImage: "url('/hero1.jpg')" }}
+  />
       <div className="container mx-auto px-4 md:px-8 py-20 md:py-32 relative">
-        <div className="max-w-4xl mx-auto text-center">
-          {/* Badge */}
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-medium mb-8 animate-fade-in-up">
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
-            </span>
-            Now in Public Beta
+        <div className="grid lg:grid-cols-2 gap-12 items-center">
+          
+          {/* Left Column: Copy */}
+          <div className="max-w-2xl">
+            {/* Badge */}
+            <div className="inline-flex items-center gap-2 px-3 py-1 border border-primary/20 bg-primary/5 text-primary text-xs font-bold uppercase tracking-wider mb-8">
+              <span className="w-2 h-2 bg-primary"></span>
+              Enterprise Ready v2.0
+            </div>
+
+            {/* Headline */}
+            <h1 className="text-4xl md:text-6xl font-bold tracking-tight text-foreground mb-6 leading-tight">
+              Precision Lead <br />
+              <span className="text-primary">Generation Engines</span>
+            </h1>
+
+            {/* Subheadline */}
+            <p className="text-lg text-muted-foreground mb-10 leading-relaxed max-w-lg">
+              Architect complex B2B campaigns with absolute control. 
+              Automate outreach, track conversion vectors, and scale without chaos.
+            </p>
+
+            {/* CTA Buttons */}
+            <div className="flex flex-col sm:flex-row gap-4 mb-12">
+              <Link href="/register">
+                <Button size="lg" className="h-14 px-8 rounded-none text-base font-semibold bg-primary hover:bg-primary/90 text-primary-foreground w-full sm:w-auto">
+                  Start Deployment
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </Button>
+              </Link>
+              <Link href="#demo">
+                <Button variant="outline" size="lg" className="h-14 px-8 rounded-none text-base font-semibold border-2 w-full sm:w-auto hover:bg-muted">
+                  View Architecture
+                </Button>
+              </Link>
+            </div>
+
+            {/* Trust indicators - tabular style */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 border-t border-border pt-8">
+              <div className="flex items-center gap-3">
+                <CheckSquare className="h-5 w-5 text-primary" />
+                <span className="text-sm font-medium">SOC2 Compliant</span>
+              </div>
+              <div className="flex items-center gap-3">
+                <CheckSquare className="h-5 w-5 text-primary" />
+                <span className="text-sm font-medium">99.99% Uptime</span>
+              </div>
+              <div className="flex items-center gap-3">
+                <CheckSquare className="h-5 w-5 text-primary" />
+                <span className="text-sm font-medium">GDPR Ready</span>
+              </div>
+            </div>
           </div>
 
-          {/* Headline */}
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight text-foreground mb-6 animate-fade-in-up" style={{ animationDelay: "100ms" }}>
-            Email marketing that{" "}
-            <span className="text-gradient">actually works</span>
-          </h1>
-
-          {/* Subheadline */}
-          <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10 animate-fade-in-up" style={{ animationDelay: "200ms" }}>
-            Create beautiful campaigns, automate your workflow, and track results in real-time. 
-            The modern platform for modern marketers.
-          </p>
-
-          {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16 animate-fade-in-up" style={{ animationDelay: "300ms" }}>
-            <Link href="/register">
-              <Button size="lg" className="h-12 px-8 text-base font-semibold gap-2">
-                Start Free Trial
-                <ArrowRight className="h-4 w-4" />
-              </Button>
-            </Link>
-            <Link href="#demo">
-              <Button variant="outline" size="lg" className="h-12 px-8 text-base font-semibold">
-                Watch Demo
-              </Button>
-            </Link>
-          </div>
-
-          {/* Trust indicators */}
-          <div className="flex flex-wrap items-center justify-center gap-8 text-sm text-muted-foreground animate-fade-in-up" style={{ animationDelay: "400ms" }}>
-            <div className="flex items-center gap-2">
-              <CheckCircle2 className="h-4 w-4 text-green-500" />
-              <span>No credit card required</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <CheckCircle2 className="h-4 w-4 text-green-500" />
-              <span>14-day free trial</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <CheckCircle2 className="h-4 w-4 text-green-500" />
-              <span>Cancel anytime</span>
-            </div>
-          </div>
-        </div>
-
-        {/* Hero Image / Dashboard Preview */}
-        <div className="mt-16 md:mt-24 animate-fade-in-up" style={{ animationDelay: "500ms" }}>
-          <div className="relative mx-auto max-w-5xl">
-            {/* Glow effect */}
-            <div className="absolute inset-0 bg-gradient-to-t from-primary/20 via-primary/5 to-transparent blur-3xl -z-10" />
+          {/* Right Column: Dashboard Interface (Geometric/Flat) */}
+          <div className="relative">
+             {/* Decorative back square */}
+            <div className="absolute -inset-4 border border-border bg-muted/20 -z-10 translate-x-4 translate-y-4" />
             
-            {/* Dashboard preview card */}
-            <div className="rounded-2xl border border-border/50 bg-card shadow-2xl overflow-hidden">
-              <div className="flex items-center gap-2 px-4 py-3 border-b border-border/50 bg-muted/30">
-                <div className="flex gap-2">
-                  <div className="w-3 h-3 rounded-full bg-red-400" />
-                  <div className="w-3 h-3 rounded-full bg-yellow-400" />
-                  <div className="w-3 h-3 rounded-full bg-green-400" />
+            {/* Main Interface Window */}
+            <div className="border border-border bg-background relative">
+              {/* Window Header */}
+              <div className="border-b border-border bg-muted/30 px-4 py-3 flex items-center justify-between">
+                <div className="flex gap-4 text-xs font-mono text-muted-foreground">
+                   <span>cmd: /campaign-status</span>
+                   <span>user: admin@mailpilot</span>
                 </div>
-                <div className="flex-1 text-center">
-                  <span className="text-xs text-muted-foreground">MailPilot Dashboard</span>
+                <div className="flex gap-2">
+                  <div className="w-3 h-3 bg-muted-foreground/30"></div>
+                  <div className="w-3 h-3 bg-muted-foreground/30"></div>
                 </div>
               </div>
-              <div className="p-6 bg-gradient-to-br from-card to-muted/20">
-                {/* Mock dashboard content */}
-                <div className="grid grid-cols-3 gap-4 mb-6">
-                  {[
-                    { label: "Total Subscribers", value: "24,589", icon: BarChart3, color: "text-primary" },
-                    { label: "Campaigns Sent", value: "1,247", icon: Zap, color: "text-blue-500" },
-                    { label: "Avg. Open Rate", value: "42.3%", icon: Shield, color: "text-green-500" },
-                  ].map((stat, i) => (
-                    <div key={i} className="p-4 rounded-xl bg-background/80 border border-border/50">
-                      <div className="flex items-center gap-2 mb-2">
-                        <stat.icon className={`h-4 w-4 ${stat.color}`} />
-                        <span className="text-xs text-muted-foreground">{stat.label}</span>
-                      </div>
-                      <p className="text-2xl font-bold">{stat.value}</p>
+
+              {/* Window Body */}
+              <div className="p-6">
+                <div className="grid grid-cols-2 gap-4 mb-8">
+                  <div className="border border-border p-4 bg-muted/5">
+                    <div className="text-xs text-muted-foreground uppercase tracking-wider mb-2">Active Leads</div>
+                    <div className="text-3xl font-bold font-mono">24,589</div>
+                    <div className="flex items-center text-xs text-green-600 mt-2">
+                      <TrendingUp className="h-3 w-3 mr-1" /> +12.5%
                     </div>
-                  ))}
+                  </div>
+                  <div className="border border-border p-4 bg-muted/5">
+                    <div className="text-xs text-muted-foreground uppercase tracking-wider mb-2">Conversion Rate</div>
+                    <div className="text-3xl font-bold font-mono">4.2%</div>
+                    <div className="flex items-center text-xs text-green-600 mt-2">
+                      <TrendingUp className="h-3 w-3 mr-1" /> +0.8%
+                    </div>
+                  </div>
                 </div>
-                <div className="h-48 rounded-xl bg-muted/30 border border-border/50 flex items-center justify-center">
-                  <div className="text-center">
-                    <BarChart3 className="h-12 w-12 mx-auto text-muted-foreground/30 mb-2" />
-                    <p className="text-sm text-muted-foreground">Campaign Performance Chart</p>
+
+                {/* Graph Placeholder */}
+                <div className="border border-border h-48 relative bg-muted/5 flex flex-col justify-end p-4">
+                  <div className="flex items-end gap-2 h-32 w-full justify-between px-2">
+                    {[40, 65, 45, 80, 55, 90, 70, 85].map((h, i) => (
+                      <div key={i} className="w-full bg-primary/80 hover:bg-primary transition-colors" style={{ height: `${h}%` }}></div>
+                    ))}
+                  </div>
+                  <div className="border-t border-border mt-2 pt-2 flex justify-between text-[10px] text-muted-foreground font-mono">
+                    <span>MON</span><span>TUE</span><span>WED</span><span>THU</span><span>FRI</span><span>SAT</span><span>SUN</span>
                   </div>
                 </div>
               </div>
             </div>
           </div>
+
         </div>
       </div>
     </section>

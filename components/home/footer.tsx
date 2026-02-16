@@ -4,150 +4,79 @@ import { Mail, Twitter, Github, Linkedin } from "lucide-react"
 export default function Footer() {
   const footerLinks = {
     product: [
-      { label: "Features", href: "#features" },
-      { label: "Pricing", href: "#pricing" },
-      { label: "Integrations", href: "#integrations" },
-      { label: "Changelog", href: "#changelog" },
+      { label: "Features", href: "#" },
+      { label: "Pricing", href: "#" },
+      { label: "API", href: "#" },
+      { label: "Changelog", href: "#" },
     ],
     company: [
-      { label: "About", href: "#about" },
-      { label: "Blog", href: "#blog" },
-      { label: "Careers", href: "#careers" },
-      { label: "Contact", href: "#contact" },
+      { label: "About", href: "#" },
+      { label: "Careers", href: "#" },
+      { label: "Legal", href: "#" },
+      { label: "Contact", href: "#" },
     ],
     resources: [
-      { label: "Documentation", href: "#docs" },
-      { label: "API Reference", href: "#api" },
-      { label: "Help Center", href: "#help" },
-      { label: "Status", href: "#status" },
-    ],
-    legal: [
-      { label: "Privacy Policy", href: "#privacy" },
-      { label: "Terms of Service", href: "#terms" },
-      { label: "Cookie Policy", href: "#cookies" },
+      { label: "Documentation", href: "#" },
+      { label: "Status", href: "#" },
+      { label: "Community", href: "#" },
+      { label: "Help Center", href: "#" },
     ],
   }
 
   return (
-    <footer className="bg-background border-t border-border/50">
+    <footer className="bg-background border-t border-border">
       <div className="container mx-auto px-4 md:px-8 py-16">
-        {/* Main Footer Content */}
-        <div className="grid grid-cols-2 md:grid-cols-6 gap-8 mb-12">
+        
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-12 mb-16">
           {/* Brand Column */}
-          <div className="col-span-2">
-            <Link href="/" className="flex items-center gap-2.5 mb-4">
-              <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br from-primary to-primary/80 shadow-lg">
-                <Mail className="h-4.5 w-4.5 text-white" />
+          <div className="md:col-span-4">
+            <Link href="/" className="flex items-center gap-3 mb-6">
+              <div className="flex h-8 w-8 items-center justify-center bg-foreground text-background">
+                <Mail className="h-4 w-4" />
               </div>
-              <span className="text-lg font-bold">MailPilot</span>
+              <span className="text-xl font-bold tracking-tight">MailPilot</span>
             </Link>
-            <p className="text-sm text-muted-foreground mb-6 max-w-xs">
-              The modern email marketing platform for growing businesses. 
-              Create, automate, and track your campaigns with ease.
+            <p className="text-sm text-muted-foreground mb-8 max-w-xs leading-relaxed">
+              Enterprise-grade email marketing and lead generation infrastructure for data-driven teams.
             </p>
-            {/* Social Links */}
-            <div className="flex gap-3">
-              <a
-                href="#"
-                className="flex h-9 w-9 items-center justify-center rounded-lg bg-muted hover:bg-muted/80 transition-colors"
-                aria-label="Twitter"
-              >
-                <Twitter className="h-4 w-4" />
-              </a>
-              <a
-                href="#"
-                className="flex h-9 w-9 items-center justify-center rounded-lg bg-muted hover:bg-muted/80 transition-colors"
-                aria-label="GitHub"
-              >
-                <Github className="h-4 w-4" />
-              </a>
-              <a
-                href="#"
-                className="flex h-9 w-9 items-center justify-center rounded-lg bg-muted hover:bg-muted/80 transition-colors"
-                aria-label="LinkedIn"
-              >
-                <Linkedin className="h-4 w-4" />
-              </a>
+            <div className="flex gap-4">
+              {[Twitter, Github, Linkedin].map((Icon, i) => (
+                <a key={i} href="#" className="p-2 border border-border hover:bg-muted text-muted-foreground hover:text-foreground transition-colors">
+                  <Icon className="h-4 w-4" />
+                </a>
+              ))}
             </div>
           </div>
 
-          {/* Product */}
-          <div>
-            <h4 className="font-semibold text-foreground mb-4">Product</h4>
-            <ul className="space-y-3">
-              {footerLinks.product.map((link) => (
-                <li key={link.label}>
-                  <a
-                    href={link.href}
-                    className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-                  >
-                    {link.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Company */}
-          <div>
-            <h4 className="font-semibold text-foreground mb-4">Company</h4>
-            <ul className="space-y-3">
-              {footerLinks.company.map((link) => (
-                <li key={link.label}>
-                  <a
-                    href={link.href}
-                    className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-                  >
-                    {link.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Resources */}
-          <div>
-            <h4 className="font-semibold text-foreground mb-4">Resources</h4>
-            <ul className="space-y-3">
-              {footerLinks.resources.map((link) => (
-                <li key={link.label}>
-                  <a
-                    href={link.href}
-                    className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-                  >
-                    {link.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Legal */}
-          <div>
-            <h4 className="font-semibold text-foreground mb-4">Legal</h4>
-            <ul className="space-y-3">
-              {footerLinks.legal.map((link) => (
-                <li key={link.label}>
-                  <a
-                    href={link.href}
-                    className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-                  >
-                    {link.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
+          {/* Links Columns */}
+          <div className="md:col-span-8 grid grid-cols-2 md:grid-cols-3 gap-8">
+            {Object.entries(footerLinks).map(([category, links]) => (
+              <div key={category}>
+                <h4 className="font-bold text-foreground uppercase tracking-wider text-sm mb-6">
+                  {category}
+                </h4>
+                <ul className="space-y-4">
+                  {links.map((link) => (
+                    <li key={link.label}>
+                      <a href={link.href} className="text-sm text-muted-foreground hover:text-primary transition-colors hover:underline underline-offset-4">
+                        {link.label}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
           </div>
         </div>
 
         {/* Bottom Bar */}
-        <div className="pt-8 border-t border-border/50 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-sm text-muted-foreground">
-            © {new Date().getFullYear()} MailPilot. All rights reserved.
-          </p>
-          <p className="text-sm text-muted-foreground">
-            Made with ♥ for modern marketers
-          </p>
+        <div className="pt-8 border-t border-border flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-muted-foreground font-mono">
+          <p>© {new Date().getFullYear()} MAILPILOT SYSTEMS INC.</p>
+          <div className="flex gap-6">
+             <a href="#" className="hover:text-foreground">PRIVACY</a>
+             <a href="#" className="hover:text-foreground">TERMS</a>
+             <a href="#" className="hover:text-foreground">SLA</a>
+          </div>
         </div>
       </div>
     </footer>

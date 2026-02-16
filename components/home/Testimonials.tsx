@@ -1,102 +1,68 @@
-import { Star, Quote } from "lucide-react"
+import { Quote } from "lucide-react"
 
 export default function Testimonials() {
   const testimonials = [
     {
       name: "Sarah Chen",
-      role: "Marketing Director",
+      role: "VP of Marketing",
       company: "TechFlow",
-      content: "MailPilot transformed how we communicate with our customers. Our open rates increased by 45% in just two months.",
-      avatar: "SC",
+      content: "MailPilot isn't just a tool; it's infrastructure. We migrated 2M+ leads in a week with zero downtime. The ROI was visible by day three.",
     },
     {
       name: "Marcus Johnson",
       role: "Founder",
       company: "GrowthLab",
-      content: "The automation features are incredible. We now send personalized campaigns at scale without lifting a finger.",
-      avatar: "MJ",
+      content: "We needed granular control over our SMTP relay settings and automation logic. This is the only platform that treats us like engineers.",
     },
     {
       name: "Emily Rodriguez",
-      role: "Head of Communications",
-      company: "Nexus Inc",
-      content: "Finally, an email marketing platform that doesn't feel like it was built in the 90s. Beautiful and powerful.",
-      avatar: "ER",
+      role: "Director",
+      company: "Nexus Systems",
+      content: "The analytics precision is unmatched. We stopped guessing about attribution models. Clean, fast, and professional.",
     },
   ]
 
   return (
-    <section className="py-24 md:py-32 bg-muted/30 relative overflow-hidden">
-      {/* Background decoration */}
-      <div className="absolute top-0 left-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2" />
-      <div className="absolute bottom-0 right-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl translate-x-1/2 translate-y-1/2" />
-
-      <div className="container mx-auto px-4 md:px-8 relative">
-        {/* Section Header */}
-        <div className="max-w-2xl mx-auto text-center mb-16">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4">
-            Testimonials
+    <section className="py-24 bg-muted/10 border-t border-border">
+      <div className="container mx-auto px-4 md:px-8">
+        
+        <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
+          <div className="max-w-xl">
+             <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-4">
+              Industry Validation
+            </h2>
+            <p className="text-lg text-muted-foreground">
+              Trusted by high-growth B2B organizations.
+            </p>
           </div>
-          <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-foreground mb-4">
-            Loved by marketers{" "}
-            <span className="text-gradient">everywhere</span>
-          </h2>
-          <p className="text-lg text-muted-foreground">
-            Join thousands of teams who trust MailPilot for their email marketing.
-          </p>
+          
+          <div className="flex gap-8 text-sm font-mono text-muted-foreground">
+             <div>
+                <span className="block text-2xl font-bold text-foreground">50k+</span>
+                Active Seats
+             </div>
+             <div>
+                <span className="block text-2xl font-bold text-foreground">1B+</span>
+                API Requests
+             </div>
+          </div>
         </div>
 
-        {/* Testimonials Grid */}
-        <div className="grid md:grid-cols-3 gap-6">
-          {testimonials.map((testimonial, index) => (
-            <div
-              key={index}
-              className="relative p-6 rounded-2xl bg-card border border-border/50 hover:border-border hover:shadow-lg transition-all duration-300"
-            >
-              {/* Quote icon */}
-              <div className="absolute top-6 right-6">
-                <Quote className="h-8 w-8 text-primary/10" />
+        <div className="grid md:grid-cols-3 gap-8">
+          {testimonials.map((t, index) => (
+            <div key={index} className="flex flex-col justify-between border border-border bg-background p-8">
+              <div>
+                <Quote className="h-8 w-8 text-primary mb-6" />
+                <p className="text-lg text-foreground font-medium leading-relaxed mb-8">
+                  "{t.content}"
+                </p>
               </div>
-
-              {/* Stars */}
-              <div className="flex gap-1 mb-4">
-                {[...Array(5)].map((_, i) => (
-                  <Star key={i} className="h-4 w-4 fill-amber-400 text-amber-400" />
-                ))}
-              </div>
-
-              {/* Content */}
-              <p className="text-muted-foreground leading-relaxed mb-6">
-                "{testimonial.content}"
-              </p>
-
-              {/* Author */}
-              <div className="flex items-center gap-3">
-                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-primary to-primary/70 text-white text-sm font-semibold">
-                  {testimonial.avatar}
-                </div>
-                <div>
-                  <p className="font-semibold text-foreground">{testimonial.name}</p>
-                  <p className="text-sm text-muted-foreground">
-                    {testimonial.role}, {testimonial.company}
-                  </p>
+              <div className="border-t border-border pt-6 mt-auto">
+                <p className="font-bold text-foreground">{t.name}</p>
+                <div className="text-sm text-muted-foreground mt-1">
+                  {t.role}, <span className="text-primary">{t.company}</span>
                 </div>
               </div>
-            </div>
-          ))}
-        </div>
-
-        {/* Stats */}
-        <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-8">
-          {[
-            { value: "50K+", label: "Active Users" },
-            { value: "10M+", label: "Emails Sent" },
-            { value: "99.9%", label: "Uptime" },
-            { value: "4.9/5", label: "User Rating" },
-          ].map((stat, index) => (
-            <div key={index} className="text-center">
-              <p className="text-3xl md:text-4xl font-bold text-foreground mb-1">{stat.value}</p>
-              <p className="text-sm text-muted-foreground">{stat.label}</p>
             </div>
           ))}
         </div>
