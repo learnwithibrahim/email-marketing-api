@@ -22,9 +22,9 @@ export default function Navbar() {
         {/* Navigation */}
         <nav className="hidden md:flex items-center gap-8">
           {[
-            { label: "Features", href: "#features" },
-            { label: "Pricing", href: "#pricing" },
-            { label: "Integrations", href: "#integrations" },
+            { label: "Features", href: "/fratures" },
+            { label: "Pricing", href: "/pricing" },
+            { label: "Integrations", href: "/integrations" },
           ].map((item) => (
             <a
               key={item.label}
