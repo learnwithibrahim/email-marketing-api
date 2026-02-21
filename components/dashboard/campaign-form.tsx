@@ -31,7 +31,7 @@ export function CampaignForm({ campaign, audiences, action, submitLabel }: Props
       {campaign && <input type="hidden" name="id" value={campaign._id} />}
 
       {state?.error && (
-        <div className="rounded-lg border border-destructive/30 bg-destructive/10 p-3 text-sm text-destructive mb-6">
+        <div className="border border-destructive/30 bg-destructive/10 p-3 text-sm text-destructive mb-6">
           {state.error}
         </div>
       )}
@@ -39,10 +39,10 @@ export function CampaignForm({ campaign, audiences, action, submitLabel }: Props
       <div className="grid gap-6 lg:grid-cols-3">
         <div className="lg:col-span-2 flex flex-col gap-6">
           <Card>
-            <CardHeader>
-              <CardTitle>Campaign Details</CardTitle>
+            <CardHeader className="border-b border-border">
+              <CardTitle className="text-base">Campaign Details</CardTitle>
             </CardHeader>
-            <CardContent className="flex flex-col gap-4">
+            <CardContent className="flex flex-col gap-4 pt-6">
               <div className="flex flex-col gap-2">
                 <Label htmlFor="name">Campaign Name *</Label>
                 <Input id="name" name="name" defaultValue={campaign?.name} required placeholder="e.g. Summer Sale Newsletter" />
@@ -61,10 +61,10 @@ export function CampaignForm({ campaign, audiences, action, submitLabel }: Props
 
         <div className="flex flex-col gap-6">
           <Card>
-            <CardHeader>
-              <CardTitle>Configuration</CardTitle>
+            <CardHeader className="border-b border-border">
+              <CardTitle className="text-base">Configuration</CardTitle>
             </CardHeader>
-            <CardContent className="flex flex-col gap-4">
+            <CardContent className="flex flex-col gap-4 pt-6">
               <div className="flex flex-col gap-2">
                 <Label>Type *</Label>
                 <Select name="type" defaultValue={campaign?.type || "newsletter"}>

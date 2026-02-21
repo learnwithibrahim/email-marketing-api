@@ -48,34 +48,34 @@ export default async function DashboardPage() {
       <DashboardCharts />
 
       <Card>
-        <CardHeader>
-          <CardTitle>Recent Campaigns</CardTitle>
+        <CardHeader className="border-b border-border">
+          <CardTitle className="text-base">Recent Campaigns</CardTitle>
         </CardHeader>
-        <CardContent>
+        <CardContent className="p-0">
           {recentCampaigns.length === 0 ? (
             <p className="text-sm text-muted-foreground py-4">No campaigns yet. Create your first campaign to get started.</p>
           ) : (
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
-                <thead>
+                <thead className="bg-muted/50">
                   <tr className="border-b border-border text-left">
-                    <th className="pb-3 font-medium text-muted-foreground">Name</th>
-                    <th className="pb-3 font-medium text-muted-foreground">Status</th>
-                    <th className="pb-3 font-medium text-muted-foreground text-right">Sent</th>
-                    <th className="pb-3 font-medium text-muted-foreground text-right">Opened</th>
+                    <th className="p-4 font-medium text-muted-foreground">Name</th>
+                    <th className="p-4 font-medium text-muted-foreground">Status</th>
+                    <th className="p-4 font-medium text-muted-foreground text-right">Sent</th>
+                    <th className="p-4 font-medium text-muted-foreground text-right">Opened</th>
                   </tr>
                 </thead>
                 <tbody>
                   {recentCampaigns.map((c) => (
-                    <tr key={c._id} className="border-b border-border last:border-0">
-                      <td className="py-3 font-medium text-foreground">{c.name}</td>
-                      <td className="py-3">
+                    <tr key={c._id} className="border-b border-border last:border-0 hover:bg-muted/20 transition-colors">
+                      <td className="p-4 font-medium text-foreground">{c.name}</td>
+                      <td className="p-4">
                         <Badge variant={c.status === "sent" ? "default" : "secondary"} className="capitalize">
                           {c.status}
                         </Badge>
                       </td>
-                      <td className="py-3 text-right text-muted-foreground">{c.sent}</td>
-                      <td className="py-3 text-right text-muted-foreground">{c.opened}</td>
+                      <td className="p-4 text-right text-muted-foreground">{c.sent}</td>
+                      <td className="p-4 text-right text-muted-foreground">{c.opened}</td>
                     </tr>
                   ))}
                 </tbody>

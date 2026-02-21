@@ -98,8 +98,8 @@ export function SubscribersView({ subscribers, pagination, stats, currentSearch,
       )}
 
       <Card>
-        <CardContent className="p-6">
-          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between mb-6">
+        <CardContent className="p-0">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between p-6 border-b border-border">
             <form onSubmit={handleSearch} className="flex items-center gap-2 flex-1 max-w-sm">
               <div className="relative flex-1">
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
@@ -124,25 +124,25 @@ export function SubscribersView({ subscribers, pagination, stats, currentSearch,
           ) : (
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
-                <thead>
+                <thead className="bg-muted/50">
                   <tr className="border-b border-border text-left">
-                    <th className="pb-3 font-medium text-muted-foreground">Email</th>
-                    <th className="pb-3 font-medium text-muted-foreground">Name</th>
-                    <th className="pb-3 font-medium text-muted-foreground">Status</th>
-                    <th className="pb-3 font-medium text-muted-foreground">Tags</th>
-                    <th className="pb-3 font-medium text-muted-foreground">Joined</th>
-                    <th className="pb-3 font-medium text-muted-foreground w-10"><span className="sr-only">Actions</span></th>
+                    <th className="p-4 font-medium text-muted-foreground">Email</th>
+                    <th className="p-4 font-medium text-muted-foreground">Name</th>
+                    <th className="p-4 font-medium text-muted-foreground">Status</th>
+                    <th className="p-4 font-medium text-muted-foreground">Tags</th>
+                    <th className="p-4 font-medium text-muted-foreground">Joined</th>
+                    <th className="p-4 font-medium text-muted-foreground w-10"><span className="sr-only">Actions</span></th>
                   </tr>
                 </thead>
                 <tbody>
                   {subscribers.map((s) => (
-                    <tr key={s._id} className="border-b border-border last:border-0">
-                      <td className="py-3 font-medium text-foreground">{s.email}</td>
-                      <td className="py-3 text-muted-foreground">{s.firstName} {s.lastName}</td>
-                      <td className="py-3">
+                    <tr key={s._id} className="border-b border-border last:border-0 hover:bg-muted/20 transition-colors">
+                      <td className="p-4 font-medium text-foreground">{s.email}</td>
+                      <td className="p-4 text-muted-foreground">{s.firstName} {s.lastName}</td>
+                      <td className="p-4">
                         <Badge variant={statusColors[s.status] || "secondary"} className="capitalize">{s.status}</Badge>
                       </td>
-                      <td className="py-3">
+                      <td className="p-4">
                         <div className="flex flex-wrap gap-1">
                           {s.tags.slice(0, 3).map((t) => (
                             <Badge key={t} variant="outline" className="text-xs">{t}</Badge>
@@ -150,8 +150,8 @@ export function SubscribersView({ subscribers, pagination, stats, currentSearch,
                           {s.tags.length > 3 && <span className="text-xs text-muted-foreground">+{s.tags.length - 3}</span>}
                         </div>
                       </td>
-                      <td className="py-3 text-muted-foreground text-sm">{new Date(s.createdAt).toLocaleDateString()}</td>
-                      <td className="py-3">
+                      <td className="p-4 text-muted-foreground text-sm">{new Date(s.createdAt).toLocaleDateString()}</td>
+                      <td className="p-4">
                         <DropdownMenu>
                           <DropdownMenuTrigger asChild>
                             <Button variant="ghost" size="icon" className="h-8 w-8">
@@ -174,7 +174,7 @@ export function SubscribersView({ subscribers, pagination, stats, currentSearch,
           )}
 
           {pagination && pagination.totalPages > 1 && (
-            <div className="flex items-center justify-between mt-6 pt-4 border-t border-border">
+            <div className="flex items-center justify-between p-6 border-t border-border bg-muted/5">
               <p className="text-sm text-muted-foreground">Page {pagination.page} of {pagination.totalPages}</p>
               <div className="flex gap-2">
                 <Button variant="outline" size="sm" disabled={!pagination.hasPrev} onClick={() => {

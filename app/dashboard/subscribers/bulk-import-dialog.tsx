@@ -33,13 +33,13 @@ export function BulkImportDialog() {
         </DialogHeader>
 
         {state?.error && (
-          <div className="rounded-lg border border-destructive/30 bg-destructive/10 p-3 text-sm text-destructive">
+          <div className="border border-destructive/30 bg-destructive/10 p-3 text-sm text-destructive">
             {state.error}
           </div>
         )}
 
         {state?.success && (
-          <div className="rounded-lg border border-success/30 bg-success/10 p-3 text-sm text-success">
+          <div className="border border-success/30 bg-success/10 p-3 text-sm text-success">
             Import complete! {state.data?.created} created, {state.data?.failed} failed.
           </div>
         )}

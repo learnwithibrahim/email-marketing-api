@@ -32,6 +32,7 @@ interface Props {
 
 export function AudiencesView({ audiences }: Props) {
   const [, startTransition] = useTransition()
+  const audiencesList = Array.isArray(audiences) ? audiences : []
 
   function handleAction(action: () => Promise<{ success?: boolean; error?: string }>, msg: string) {
     startTransition(async () => {
@@ -51,7 +52,7 @@ export function AudiencesView({ audiences }: Props) {
         <CreateAudienceDialog />
       </div>
 
-      {audiences.length === 0 ? (
+      {audiencesList.length === 0 ? (
         <Card>
           <CardContent className="py-12 text-center text-muted-foreground">
             No audiences created yet. Create your first audience to get started.
@@ -59,7 +60,7 @@ export function AudiencesView({ audiences }: Props) {
         </Card>
       ) : (
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {audiences.map((a) => (
+          {audiencesList.map((a) => (
             <Card key={a._id}>
               <CardContent className="p-6">
                 <div className="flex items-start justify-between">
@@ -123,7 +124,7 @@ function CreateAudienceDialog() {
           <DialogTitle>Create Audience</DialogTitle>
         </DialogHeader>
         {state?.error && (
-          <div className="rounded-lg border border-destructive/30 bg-destructive/10 p-3 text-sm text-destructive">{state.error}</div>
+          <div className="border border-destructive/30 bg-destructive/10 p-3 text-sm text-destructive">{state.error}</div>
         )}
         <form action={formAction} className="flex flex-col gap-4">
           <div className="flex flex-col gap-2">

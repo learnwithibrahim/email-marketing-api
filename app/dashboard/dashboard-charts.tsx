@@ -38,7 +38,7 @@ export function DashboardCharts() {
                 contentStyle={{
                   background: "hsl(var(--card))",
                   border: "1px solid hsl(var(--border))",
-                  borderRadius: "8px",
+                  borderRadius: "0px",
                   color: "hsl(var(--foreground))",
                 }}
               />
@@ -62,11 +62,11 @@ export function DashboardCharts() {
                 contentStyle={{
                   background: "hsl(var(--card))",
                   border: "1px solid hsl(var(--border))",
-                  borderRadius: "8px",
+                  borderRadius: "0px",
                   color: "hsl(var(--foreground))",
                 }}
               />
-              <Bar dataKey="rate" fill="hsl(var(--primary))" radius={[4, 4, 0, 0]} />
+              <Bar dataKey="rate" fill="hsl(var(--primary))" radius={[0, 0, 0, 0]} />
             </BarChart>
           </ResponsiveContainer>
         </CardContent>

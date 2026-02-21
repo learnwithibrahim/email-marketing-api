@@ -106,32 +106,32 @@ export default async function AnalyticsPage() {
       <AnalyticsCharts timeseries={timeseries} />
 
       <Card>
-        <CardHeader>
-          <CardTitle>Top Campaigns</CardTitle>
+        <CardHeader className="border-b border-border">
+          <CardTitle className="text-base">Top Campaigns</CardTitle>
         </CardHeader>
-        <CardContent>
+        <CardContent className="p-0">
           {topCampaigns.length === 0 ? (
             <p className="text-sm text-muted-foreground py-4">No campaign data available yet.</p>
           ) : (
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
-                <thead>
+                <thead className="bg-muted/50">
                   <tr className="border-b border-border text-left">
-                    <th className="pb-3 font-medium text-muted-foreground">Campaign</th>
-                    <th className="pb-3 font-medium text-muted-foreground text-right">Sent</th>
-                    <th className="pb-3 font-medium text-muted-foreground text-right">Open Rate</th>
-                    <th className="pb-3 font-medium text-muted-foreground text-right">Click Rate</th>
+                    <th className="p-4 font-medium text-muted-foreground">Campaign</th>
+                    <th className="p-4 font-medium text-muted-foreground text-right">Sent</th>
+                    <th className="p-4 font-medium text-muted-foreground text-right">Open Rate</th>
+                    <th className="p-4 font-medium text-muted-foreground text-right">Click Rate</th>
                   </tr>
                 </thead>
                 <tbody>
                   {topCampaigns.map((c) => (
-                    <tr key={c._id} className="border-b border-border last:border-0">
-                      <td className="py-3 font-medium text-foreground">{c.name}</td>
-                      <td className="py-3 text-right text-muted-foreground">{c.sent}</td>
-                      <td className="py-3 text-right">
+                    <tr key={c._id} className="border-b border-border last:border-0 hover:bg-muted/20 transition-colors">
+                      <td className="p-4 font-medium text-foreground">{c.name}</td>
+                      <td className="p-4 text-right text-muted-foreground">{c.sent}</td>
+                      <td className="p-4 text-right">
                         <Badge variant="secondary">{c.openRate}%</Badge>
                       </td>
-                      <td className="py-3 text-right">
+                      <td className="p-4 text-right">
                         <Badge variant="secondary">{c.clickRate}%</Badge>
                       </td>
                     </tr>

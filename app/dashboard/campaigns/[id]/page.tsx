@@ -41,7 +41,7 @@ export default async function CampaignDetailPage({ params }: { params: Promise<{
   return (
     <div className="flex flex-col gap-6">
       <div className="flex items-center gap-4">
-        <Link href="/dashboard/campaigns" className="p-2 rounded-lg hover:bg-accent">
+        <Link href="/dashboard/campaigns" className="p-2 hover:bg-accent">
           <ArrowLeft className="h-5 w-5" />
         </Link>
         <div className="flex-1">
@@ -109,7 +109,7 @@ export default async function CampaignDetailPage({ params }: { params: Promise<{
       <CampaignAnalyticsCharts stats={stats} rates={rates} />
 
       <Card>
-        <CardHeader><CardTitle>Campaign Info</CardTitle></CardHeader>
+        <CardHeader className="border-b border-border"><CardTitle className="text-base">Campaign Info</CardTitle></CardHeader>
         <CardContent>
           <dl className="grid gap-3 sm:grid-cols-2 text-sm">
             <div>

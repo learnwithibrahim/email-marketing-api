@@ -16,7 +16,7 @@ interface StatCardProps {
 
 export function StatCard({ title, value, icon: Icon, description, trend }: StatCardProps) {
   return (
-    <Card className="group hover:shadow-lg hover:border-border/80 transition-all duration-200 hover:-translate-y-0.5">
+    <Card className="group hover:border-border/80 transition-all duration-200">
       <CardContent className="p-6">
         <div className="flex items-start justify-between">
           <div className="flex flex-col gap-1 flex-1">
@@ -45,7 +45,7 @@ export function StatCard({ title, value, icon: Icon, description, trend }: StatC
               )}
             </div>
           </div>
-          <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-gradient-to-br from-primary/10 to-primary/5 group-hover:from-primary/15 group-hover:to-primary/10 transition-all duration-200">
+          <div className="flex h-14 w-14 items-center justify-center bg-gradient-to-br from-primary/10 to-primary/5 group-hover:from-primary/15 group-hover:to-primary/10 transition-all duration-200">
             <Icon className="h-7 w-7 text-primary" />
           </div>
         </div>

@@ -8,18 +8,18 @@ interface SectionCardProps {
   action?: React.ReactNode
 }
 
-export function SectionCard({ 
-  title, 
-  description, 
-  children, 
+export function SectionCard({
+  title,
+  description,
+  children,
   className,
-  action 
+  action
 }: SectionCardProps) {
   return (
     <div className={cn(
-      "rounded-xl border border-border/50 bg-card shadow-sm overflow-hidden",
+      "border border-border/50 bg-card overflow-hidden",
       "bg-gradient-to-b from-card to-muted/30",
-      "transition-all duration-200 hover:shadow-md hover:border-border",
+      "transition-all duration-200 hover:border-border",
       className
     )}>
       {(title || action) && (

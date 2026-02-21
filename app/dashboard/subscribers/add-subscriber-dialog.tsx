@@ -32,7 +32,7 @@ export function AddSubscriberDialog() {
         </DialogHeader>
 
         {state?.error && (
-          <div className="rounded-lg border border-destructive/30 bg-destructive/10 p-3 text-sm text-destructive">
+          <div className="border border-destructive/30 bg-destructive/10 p-3 text-sm text-destructive">
             {state.error}
           </div>
         )}

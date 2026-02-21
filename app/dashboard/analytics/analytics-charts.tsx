@@ -11,15 +11,15 @@ interface Props {
 export function AnalyticsCharts({ timeseries }: Props) {
   const chartData = timeseries.length > 0
     ? timeseries.map((d) => ({
-        ...d,
-        date: new Date(d.date).toLocaleDateString("en-US", { month: "short", day: "numeric" }),
-      }))
+      ...d,
+      date: new Date(d.date).toLocaleDateString("en-US", { month: "short", day: "numeric" }),
+    }))
     : [
-        { date: "Feb 1", sent: 1200, delivered: 1180, opened: 480, clicked: 150, bounced: 20 },
-        { date: "Feb 5", sent: 800, delivered: 790, opened: 350, clicked: 100, bounced: 10 },
-        { date: "Feb 10", sent: 1500, delivered: 1470, opened: 620, clicked: 200, bounced: 30 },
-        { date: "Feb 15", sent: 1100, delivered: 1080, opened: 500, clicked: 170, bounced: 20 },
-      ]
+      { date: "Feb 1", sent: 1200, delivered: 1180, opened: 480, clicked: 150, bounced: 20 },
+      { date: "Feb 5", sent: 800, delivered: 790, opened: 350, clicked: 100, bounced: 10 },
+      { date: "Feb 10", sent: 1500, delivered: 1470, opened: 620, clicked: 200, bounced: 30 },
+      { date: "Feb 15", sent: 1100, delivered: 1080, opened: 500, clicked: 170, bounced: 20 },
+    ]
 
   return (
     <Card>
@@ -36,7 +36,7 @@ export function AnalyticsCharts({ timeseries }: Props) {
               contentStyle={{
                 background: "hsl(var(--card))",
                 border: "1px solid hsl(var(--border))",
-                borderRadius: "8px",
+                borderRadius: "0px",
                 color: "hsl(var(--foreground))",
               }}
             />

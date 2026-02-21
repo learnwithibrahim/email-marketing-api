@@ -39,6 +39,7 @@ interface Props {
 
 export function TemplatesView({ templates }: Props) {
   const [, startTransition] = useTransition()
+  const templatesList = Array.isArray(templates) ? templates : []
 
   function handleDelete(id: string) {
     startTransition(async () => {
@@ -58,7 +59,7 @@ export function TemplatesView({ templates }: Props) {
         <CreateTemplateDialog />
       </div>
 
-      {templates.length === 0 ? (
+      {templatesList.length === 0 ? (
         <Card>
           <CardContent className="py-12 text-center text-muted-foreground">
             No templates yet. Create your first template to get started.
@@ -66,12 +67,12 @@ export function TemplatesView({ templates }: Props) {
         </Card>
       ) : (
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {templates.map((t) => (
+          {templatesList.map((t) => (
             <Card key={t._id} className="group">
               <CardContent className="p-0">
-                <div className="h-36 bg-muted rounded-t-lg flex items-center justify-center">
+                <div className="h-36 bg-muted flex items-center justify-center">
                   {t.thumbnail ? (
-                    <img src={t.thumbnail} alt={t.name} className="h-full w-full object-cover rounded-t-lg" />
+                    <img src={t.thumbnail} alt={t.name} className="h-full w-full object-cover" />
                   ) : (
                     <FileText className="h-12 w-12 text-muted-foreground/40" />
                   )}
@@ -127,7 +128,7 @@ function CreateTemplateDialog() {
           <DialogTitle>Create Template</DialogTitle>
         </DialogHeader>
         {state?.error && (
-          <div className="rounded-lg border border-destructive/30 bg-destructive/10 p-3 text-sm text-destructive">{state.error}</div>
+          <div className="border border-destructive/30 bg-destructive/10 p-3 text-sm text-destructive">{state.error}</div>
         )}
         <form action={formAction} className="flex flex-col gap-4">
           <div className="flex flex-col gap-2">
