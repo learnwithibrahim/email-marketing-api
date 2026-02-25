@@ -237,3 +237,28 @@ export interface SecuritySettings {
     device: string
   }[]
 }
+// ============ Leads ============
+export interface Lead {
+  _id: string
+  name: string
+  address: string
+  website: string
+  emails: string[]
+  phones: string[]
+  validatedEmails: string[]
+  sourceActor: string
+  raw: {
+    title?: string
+    categoryName?: string
+    phone?: string
+    phoneUnformatted?: string
+    website?: string
+    url?: string
+    searchString?: string
+    language?: string
+    rank?: number
+    imageUrl?: string
+  }
+  createdAt: string
+  updatedAt: string
+}

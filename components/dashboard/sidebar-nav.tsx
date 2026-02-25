@@ -12,6 +12,7 @@ import {
   Settings,
   Mail,
   LogOut,
+  Target,
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { logoutAction } from "@/lib/actions"
@@ -21,6 +22,7 @@ const navItems = [
   { href: "/dashboard/campaigns", label: "Campaigns", icon: Send },
   { href: "/dashboard/subscribers", label: "Subscribers", icon: Users },
   { href: "/dashboard/audiences", label: "Audiences", icon: UsersRound },
+  { href: "/dashboard/leads", label: "Leads", icon: Target },
   { href: "/dashboard/templates", label: "Templates", icon: FileText },
   { href: "/dashboard/analytics", label: "Analytics", icon: BarChart3 },
   { href: "/dashboard/settings", label: "Settings", icon: Settings },

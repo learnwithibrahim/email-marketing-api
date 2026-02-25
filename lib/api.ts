@@ -15,6 +15,7 @@ import type {
   ProfileSettings,
   NotificationSettings,
   SecuritySettings,
+  Lead,
 } from "./types"
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000"
@@ -324,6 +325,28 @@ export const settingsApi = {
   updatePassword(body: { currentPassword: string; newPassword: string }, token?: string) {
     return request<ApiResponse>("/api/settings/password", {
       method: "PUT",
+      body: JSON.stringify(body),
+    }, token)
+  },
+}
+
+// ============ Leads API ============
+
+export const leadsApi = {
+  list(params: Record<string, string> = {}, token?: string) {
+    const qs = new URLSearchParams(params).toString()
+    return request<{ ok: boolean; items: Lead[]; total: number; page: number; limit: number }>(`/api/v1/leads?${qs}`, {}, token)
+  },
+  scrape(body: {
+    actorId: string
+    input: {
+      searchStringsArray: string[]
+      maxCrawledPlacesPerSearch: number
+      language: string
+    }
+  }, token?: string) {
+    return request<ApiResponse>("/api/v1/scrape", {
+      method: "POST",
       body: JSON.stringify(body),
     }, token)
   },
