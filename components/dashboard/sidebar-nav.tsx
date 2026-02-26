@@ -11,7 +11,6 @@ import {
   FileText,
   BarChart3,
   Settings,
-  Mail,
   LogOut,
   Target,
 } from "lucide-react"
@@ -33,57 +32,76 @@ export function SidebarNav() {
   const pathname = usePathname()
 
   return (
-    <aside className="hidden lg:flex flex-col w-64 border-r border-border/50 bg-gradient-to-b from-card to-background min-h-screen sticky top-0">
-      {/* Logo */}
-      <div className="flex items-center gap-3 px-6 py-5 border-b border-border/50">
+    <aside className="sticky top-0 z-40 hidden h-screen w-64 flex-col border-r border-slate-200 bg-white lg:flex shadow-sm">
 
-        <div className="flex flex-col">
-          <Image src="/logo.png" alt="Logo" width={200} height={150} />
-        </div>
+      {/* Logo Area */}
+      <div className="flex h-16 shrink-0 items-center px-6 border-b border-slate-100">
+        <Image
+          src="/logo.png"
+          alt="Logo"
+          width={140}
+          height={36}
+          className="object-contain"
+          priority
+        />
       </div>
 
-      {/* Navigation */}
-      <nav className="flex-1 flex flex-col gap-1 p-4" role="navigation" aria-label="Dashboard navigation">
-        <div className="mb-2 px-3">
-          <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground/70">Menu</p>
+      {/* Navigation Area */}
+      <nav className="flex-1 space-y-1 overflow-y-auto px-3 py-6 scrollbar-thin scrollbar-thumb-slate-200" role="navigation">
+        <div className="mb-4 px-3 text-xs font-semibold uppercase tracking-wider text-slate-400">
+          Main Menu
         </div>
-        {navItems.map((item) => {
-          const isActive = item.href === "/dashboard"
-            ? pathname === "/dashboard"
-            : pathname.startsWith(item.href)
-          return (
-            <Link
-              key={item.href}
-              href={item.href}
-              className={cn(
-                "flex items-center gap-3 px-3 py-2.5 text-sm font-medium transition-all duration-200",
-                isActive
-                  ? "bg-gradient-to-r from-primary/10 to-primary/5 text-primary border border-primary/20"
-                  : "text-muted-foreground hover:bg-accent hover:text-foreground"
-              )}
-            >
-              <item.icon className={cn("h-5 w-5", isActive && "text-primary")} />
-              {item.label}
-              {isActive && (
-                <div className="ml-auto w-1.5 h-1.5 bg-primary" />
-              )}
-            </Link>
-          )
-        })}
+
+        <div className="space-y-1">
+          {navItems.map((item) => {
+            const isActive =
+              item.href === "/dashboard"
+                ? pathname === "/dashboard"
+                : pathname.startsWith(item.href)
+
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={cn(
+                  "group flex items-center gap-3 rounded-md px-3 py-2.5 text-sm font-medium transition-colors",
+                  isActive
+                    ? "bg-indigo-50 text-indigo-700"
+                    : "text-slate-600 hover:bg-slate-100 hover:text-slate-900"
+                )}
+              >
+                <item.icon
+                  className={cn(
+                    "h-5 w-5 shrink-0 transition-colors",
+                    isActive
+                      ? "text-indigo-700"
+                      : "text-slate-400 group-hover:text-slate-600"
+                  )}
+                  aria-hidden="true"
+                />
+                {item.label}
+              </Link>
+            )
+          })}
+        </div>
       </nav>
 
-      {/* Footer */}
-      <div className="p-4 border-t border-border/50">
+      {/* Footer Area */}
+      <div className="mt-auto border-t border-slate-200 p-4 bg-slate-50/50">
         <form action={logoutAction}>
           <button
             type="submit"
-            className="flex items-center gap-3 px-3 py-2.5 text-sm font-medium text-muted-foreground hover:bg-destructive/10 hover:text-destructive transition-colors w-full"
+            className="group flex w-full items-center gap-3 rounded-md px-3 py-2.5 text-sm font-medium text-slate-600 transition-colors hover:bg-red-50 hover:text-red-700"
           >
-            <LogOut className="h-5 w-5" />
+            <LogOut
+              className="h-5 w-5 shrink-0 text-slate-400 transition-colors group-hover:text-red-600"
+              aria-hidden="true"
+            />
             Sign out
           </button>
         </form>
       </div>
+
     </aside>
   )
 }
