@@ -14,8 +14,8 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       <div className="flex flex-col min-h-screen lg:pl-64 pt-16 lg:pt-0">
         <DashboardHeader />
 
-        <main className="flex-1 p-4 md:p-8 lg:p-10">
-          <div className="max-w-7xl mx-auto">
+        <main className="flex-1 p-4">
+          <div className=" mx-auto">
             {children}
           </div>
         </main>
