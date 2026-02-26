@@ -6,7 +6,7 @@ import { DashboardCharts } from "./dashboard-charts"
 import { getToken } from "@/lib/auth"
 import { dashboardApi } from "@/lib/api"
 
-export const metadata = { title: "Dashboard - MailPilot" }
+export const metadata = { title: "Dashboard - Funurex" }
 
 async function getDashboardData() {
   try {

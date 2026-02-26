@@ -37,7 +37,7 @@ export default function Navbar() {
           <div className="relative h-10 w-32 md:w-40 flex items-center">
             <Image
               src="/logo.png"
-              alt="MailPilot Logo"
+              alt="Funurex Logo"
               width={200}
               height={150}
               className="object-contain"

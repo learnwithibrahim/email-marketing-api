@@ -19,7 +19,7 @@ export function RegisterForm() {
           Create your account
         </h1>
         <p className="text-[15px] md:text-[16px] text-gray-600 font-medium">
-          Get started with MailPilot and elevate your marketing.
+          Get started with Funurex and elevate your marketing.
         </p>
       </div>
 
@@ -109,7 +109,7 @@ export function RegisterForm() {
             </>
           ) : (
             <>
-              Explore MailPilot free
+              Explore Funurex free
               <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
             </>
           )}

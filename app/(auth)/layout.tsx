@@ -111,7 +111,7 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
           </div>
 
           <footer className="mt-12 text-center text-[13px] font-bold text-gray-400 uppercase tracking-widest">
-            <p>&copy; {new Date().getFullYear()} MailPilot Technologies. All rights reserved.</p>
+            <p>&copy; {new Date().getFullYear()} Funurex Technologies. All rights reserved.</p>
           </footer>
         </div>
       </div>

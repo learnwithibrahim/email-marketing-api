@@ -4,7 +4,7 @@ import { settingsApi, authApi } from "@/lib/api"
 import { SettingsView } from "./settings-view"
 import type { ProfileSettings, NotificationSettings, SecuritySettings } from "@/lib/types"
 
-export const metadata = { title: "Settings - MailPilot" }
+export const metadata = { title: "Settings - Funurex" }
 
 export default async function SettingsPage() {
     const token = await getToken()

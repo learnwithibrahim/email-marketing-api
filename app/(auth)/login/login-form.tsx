@@ -164,7 +164,7 @@ export function LoginForm({
 
       {/* Footer Link */}
       <div className="pt-2 text-center text-[15px]">
-        <span className="text-gray-600 font-medium">New to MailPilot? </span>
+        <span className="text-gray-600 font-medium">New to Funurex? </span>
         <Link
           href="/register"
           className="font-bold text-[#2e2692] hover:text-[#22c55e] transition-colors"

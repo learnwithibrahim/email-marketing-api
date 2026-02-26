@@ -4,7 +4,7 @@ import { campaignsApi, audiencesApi } from "@/lib/api"
 import { CampaignForm } from "@/components/dashboard/campaign-form"
 import { updateCampaignAction } from "@/lib/campaign-actions"
 
-export const metadata = { title: "Edit Campaign - MailPilot" }
+export const metadata = { title: "Edit Campaign - Funurex" }
 
 export default async function EditCampaignPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params

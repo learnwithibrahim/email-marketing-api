@@ -5,7 +5,7 @@ import { getToken } from "@/lib/auth"
 import { campaignsApi } from "@/lib/api"
 import { CampaignsTable } from "./campaigns-table"
 
-export const metadata = { title: "Campaigns - MailPilot" }
+export const metadata = { title: "Campaigns - Funurex" }
 
 interface Props {
   searchParams: Promise<{ page?: string; search?: string; status?: string }>

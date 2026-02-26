@@ -7,7 +7,7 @@ import { getToken } from "@/lib/auth"
 import { campaignsApi } from "@/lib/api"
 import { CampaignAnalyticsCharts } from "./analytics-charts"
 
-export const metadata = { title: "Campaign Analytics - MailPilot" }
+export const metadata = { title: "Campaign Analytics - Funurex" }
 
 export default async function CampaignDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params

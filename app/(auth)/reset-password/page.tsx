@@ -1,6 +1,6 @@
 import { ResetPasswordForm } from "./reset-form"
 
-export const metadata = { title: "Reset Password - MailPilot" }
+export const metadata = { title: "Reset Password - Funurex" }
 
 export default async function ResetPasswordPage({
   searchParams,

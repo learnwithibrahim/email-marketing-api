@@ -2,7 +2,7 @@ import { getToken } from "@/lib/auth"
 import { audiencesApi } from "@/lib/api"
 import { AudiencesView } from "./audiences-view"
 
-export const metadata = { title: "Audiences - MailPilot" }
+export const metadata = { title: "Audiences - Funurex" }
 
 async function getAudiences() {
   try {

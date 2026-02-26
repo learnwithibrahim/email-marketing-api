@@ -85,7 +85,7 @@ export default function Footer() {
 
           {/* Copyright */}
           <p className="text-[13px] text-gray-500 font-bold uppercase tracking-wider text-center md:text-left">
-            © {new Date().getFullYear()} MAILPILOT SYSTEMS INC.
+            © {new Date().getFullYear()} Funurex SYSTEMS INC.
           </p>
 
           {/* Middle Links */}

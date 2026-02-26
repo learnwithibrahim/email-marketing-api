@@ -4,7 +4,7 @@ import { getToken } from "@/lib/auth"
 import { analyticsApi } from "@/lib/api"
 import { AnalyticsCharts } from "./analytics-charts"
 
-export const metadata = { title: "Analytics - MailPilot" }
+export const metadata = { title: "Analytics - Funurex" }
 
 async function getAnalyticsData() {
   try {

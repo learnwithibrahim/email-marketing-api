@@ -9,7 +9,7 @@ export default function Testimonials() {
       name: "Sarah Chen",
       role: "VP of Marketing",
       company: "TechFlow",
-      content: "MailPilot isn't just a tool; it's infrastructure. We migrated 2M+ leads in a week with zero downtime. The ROI was visible by day three.",
+      content: "Funurex isn't just a tool; it's infrastructure. We migrated 2M+ leads in a week with zero downtime. The ROI was visible by day three.",
       avatar: "https://i.pravatar.cc/150?u=sarah",
     },
     {

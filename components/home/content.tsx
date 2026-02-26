@@ -17,7 +17,7 @@ export default function CTA() {
             <span className="text-gradient">business?</span>
           </h2>
           <p className="text-lg md:text-xl text-muted-foreground mb-10 max-w-xl mx-auto">
-            Join thousands of marketers who use MailPilot to connect with their audience 
+            Join thousands of marketers who use Funurex to connect with their audience
             and drive real results.
           </p>
 

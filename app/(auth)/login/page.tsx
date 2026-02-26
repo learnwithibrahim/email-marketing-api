@@ -1,6 +1,6 @@
 import { LoginForm } from "./login-form";
 
-export const metadata = { title: "Login - MailPilot" };
+export const metadata = { title: "Login - Funurex" };
 
 export default async function LoginPage({
   searchParams,

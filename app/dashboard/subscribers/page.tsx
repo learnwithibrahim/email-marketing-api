@@ -2,7 +2,7 @@ import { getToken } from "@/lib/auth"
 import { subscribersApi } from "@/lib/api"
 import { SubscribersView } from "./subscribers-view"
 
-export const metadata = { title: "Subscribers - MailPilot" }
+export const metadata = { title: "Subscribers - Funurex" }
 
 interface Props {
   searchParams: Promise<{ page?: string; search?: string; status?: string }>

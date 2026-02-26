@@ -3,7 +3,7 @@ import { audiencesApi } from "@/lib/api"
 import { CampaignForm } from "@/components/dashboard/campaign-form"
 import { createCampaignAction } from "@/lib/campaign-actions"
 
-export const metadata = { title: "New Campaign - MailPilot" }
+export const metadata = { title: "New Campaign - Funurex" }
 
 async function getAudiences() {
   try {

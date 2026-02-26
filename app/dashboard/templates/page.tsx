@@ -2,7 +2,7 @@ import { getToken } from "@/lib/auth"
 import { templatesApi } from "@/lib/api"
 import { TemplatesView } from "./templates-view"
 
-export const metadata = { title: "Templates - MailPilot" }
+export const metadata = { title: "Templates - Funurex" }
 
 async function getTemplates() {
   try {
