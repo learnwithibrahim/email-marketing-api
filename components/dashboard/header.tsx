@@ -63,20 +63,6 @@ export function DashboardHeader({ user }: DashboardHeaderProps) {
   return (
     <header className="sticky top-0 z-40 flex items-center justify-between px-4 lg:px-6 h-16 border-b border-border/50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="flex items-center gap-4">
-        {/* Mobile menu button */}
-        <button
-          type="button"
-          className="lg:hidden p-2 hover:bg-accent transition-colors"
-          onClick={() => setOpen(!open)}
-          aria-label="Toggle navigation"
-        >
-          {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-        </button>
-
-        {/* Mobile logo */}
-        <div className="flex items-center gap-2 lg:hidden">
-          <Image src="/logo.png" alt="Logo" width={32} height={32} />
-        </div>
 
         {/* Search bar - hidden on mobile */}
         <div className="hidden md:flex items-center gap-2">
