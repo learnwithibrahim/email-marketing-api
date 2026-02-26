@@ -18,7 +18,7 @@ import type {
   Lead,
 } from "./types"
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000"
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://187.77.185.7:5000"
 
 // ---------- helpers ----------
 

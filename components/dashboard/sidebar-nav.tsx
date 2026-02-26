@@ -2,6 +2,7 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
+import Image from "next/image"
 import {
   LayoutDashboard,
   Send,
@@ -35,12 +36,9 @@ export function SidebarNav() {
     <aside className="hidden lg:flex flex-col w-64 border-r border-border/50 bg-gradient-to-b from-card to-background min-h-screen sticky top-0">
       {/* Logo */}
       <div className="flex items-center gap-3 px-6 py-5 border-b border-border/50">
-        <div className="flex h-10 w-10 items-center justify-center bg-gradient-to-br from-primary to-primary/80">
-          <Mail className="h-5 w-5 text-white" />
-        </div>
+
         <div className="flex flex-col">
-          <span className="text-lg font-bold text-foreground">MailPilot</span>
-          <span className="text-xs text-muted-foreground">Email Marketing</span>
+          <Image src="/logo.png" alt="Logo" width={200} height={150} />
         </div>
       </div>
 

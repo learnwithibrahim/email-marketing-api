@@ -3,6 +3,7 @@
 import { useState } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
+import Image from "next/image"
 import {
   Menu,
   X,
@@ -74,10 +75,7 @@ export function DashboardHeader({ user }: DashboardHeaderProps) {
 
         {/* Mobile logo */}
         <div className="flex items-center gap-2 lg:hidden">
-          <div className="flex h-8 w-8 items-center justify-center bg-gradient-to-br from-primary to-primary/80">
-            <Mail className="h-4 w-4 text-white" />
-          </div>
-          <span className="font-bold text-foreground">MailPilot</span>
+          <Image src="/logo.png" alt="Logo" width={32} height={32} />
         </div>
 
         {/* Search bar - hidden on mobile */}
@@ -154,14 +152,9 @@ export function DashboardHeader({ user }: DashboardHeaderProps) {
           <div className="absolute inset-0 bg-foreground/20 backdrop-blur-sm" onClick={() => setOpen(false)} />
           <nav className="absolute left-0 top-0 bottom-0 w-72 bg-gradient-to-b from-card to-background border-r border-border/50 flex flex-col" role="navigation" aria-label="Mobile navigation">
             {/* Mobile logo */}
-            <div className="flex items-center gap-3 px-6 py-5 border-b border-border/50">
-              <div className="flex h-10 w-10 items-center justify-center bg-gradient-to-br from-primary to-primary/80">
-                <Mail className="h-5 w-5 text-white" />
-              </div>
-              <div className="flex flex-col">
-                <span className="text-lg font-bold text-foreground">MailPilot</span>
-                <span className="text-xs text-muted-foreground">Email Marketing</span>
-              </div>
+            <div className="flex items-center gap-3">
+              <Image src="/logo.png" alt="Logo" width={250} height={250} />
+
             </div>
 
             <div className="flex-1 flex flex-col gap-1 p-4">

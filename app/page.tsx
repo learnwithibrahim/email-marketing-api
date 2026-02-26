@@ -4,6 +4,7 @@ import Features from "@/components/home/Features";
 import Testimonials from "@/components/home/Testimonials";
 import CTA from "@/components/home/CTA";
 import Footer from "@/components/home/footer";
+import Quality from "@/components/home/Quality";
 
 export default function HomePage() {
   return (
@@ -11,6 +12,7 @@ export default function HomePage() {
       <Navbar />
       <Hero />
       <Features />
+      <Quality />
       <Testimonials />
       <CTA />
       <Footer />
