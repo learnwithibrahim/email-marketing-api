@@ -8,8 +8,11 @@ import "./globals.css"
 const _inter = Inter({ subsets: ["latin"], variable: "--font-inter" })
 
 export const metadata: Metadata = {
-  title: "MailPilot - Email Marketing Dashboard",
+  title: "Funurex Lead Generation",
   description: "Professional email marketing platform. Create campaigns, manage subscribers, and track analytics.",
+  icons: {
+    icon: "/cat.png",
+  },
 }
 
 export const viewport: Viewport = {
