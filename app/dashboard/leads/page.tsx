@@ -1,5 +1,5 @@
 import { getToken } from "@/lib/auth"
-import { leadsApi } from "@/lib/api"
+import { leadsApi, audiencesApi } from "@/lib/api"
 import { LeadsView } from "./leads-view"
 
 export const metadata = { title: "Leads - Funurex" }
@@ -38,13 +38,20 @@ export default async function LeadsPage({ searchParams }: Props) {
     }
     if (params.search) queryParams.search = params.search
 
+    const token = await getToken()
     const { data, pagination } = await getLeads(queryParams)
+    let audiences: any[] = []
+    if (token) {
+        const audRes = await audiencesApi.list({}, token)
+        audiences = audRes.data || []
+    }
 
     return (
         <LeadsView
             leads={data ?? []}
             pagination={pagination}
             currentSearch={params.search || ""}
+            audiences={audiences}
         />
     )
 }

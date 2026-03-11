@@ -4,8 +4,9 @@ import { revalidatePath } from "next/cache"
 import { redirect } from "next/navigation"
 import { getToken } from "./auth"
 import { templatesApi } from "./api"
+export type ActionState = { error?: string; success?: boolean } | null
 
-export async function createTemplateAction(_prev: unknown, formData: FormData) {
+export async function createTemplateAction(_prev: unknown, formData: FormData): Promise<ActionState> {
   const token = await getToken()
   if (!token) redirect("/login")
 
@@ -25,10 +26,10 @@ export async function createTemplateAction(_prev: unknown, formData: FormData) {
   }
 
   revalidatePath("/dashboard/templates")
-  redirect("/dashboard/templates")
+  return { success: true }
 }
 
-export async function updateTemplateAction(_prev: unknown, formData: FormData) {
+export async function updateTemplateAction(_prev: unknown, formData: FormData): Promise<ActionState> {
   const token = await getToken()
   if (!token) redirect("/login")
 
@@ -47,7 +48,7 @@ export async function updateTemplateAction(_prev: unknown, formData: FormData) {
   }
 
   revalidatePath("/dashboard/templates")
-  redirect("/dashboard/templates")
+  return { success: true }
 }
 
 export async function deleteTemplateAction(id: string) {

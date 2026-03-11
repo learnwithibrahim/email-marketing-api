@@ -16,12 +16,37 @@ interface Props {
     leads: Lead[]
     pagination: Pagination | null
     currentSearch: string
+    audiences: any[]
 }
 
-export function LeadsView({ leads, pagination, currentSearch }: Props) {
+import { Checkbox } from "@/components/ui/checkbox"
+import { LeadToCampaignDialog } from "./lead-to-campaign-dialog"
+import { cn } from "@/lib/utils"
+
+export function LeadsView({ leads, pagination, currentSearch, audiences }: Props) {
     const router = useRouter()
     const [search, setSearch] = useState(currentSearch)
     const [isExporting, startExport] = useTransition()
+    const [selectedIds, setSelectedIds] = useState<string[]>([])
+
+    const selectedLeads = leads.filter(l => selectedIds.includes(l._id))
+    const selectedEmails = selectedLeads
+        .map(l => l.validatedEmails?.[0] || l.emails?.[0])
+        .filter(Boolean) as string[]
+
+    const toggleAll = () => {
+        if (selectedIds.length === leads.length) {
+            setSelectedIds([])
+        } else {
+            setSelectedIds(leads.map(l => l._id))
+        }
+    }
+
+    const toggleOne = (id: string) => {
+        setSelectedIds(prev =>
+            prev.includes(id) ? prev.filter(i => i !== id) : [...prev, id]
+        )
+    }
 
     // Calculate serial number starting point
     const startIndex = ((pagination?.page || 1) - 1) * (pagination?.limit || 50)
@@ -82,6 +107,13 @@ export function LeadsView({ leads, pagination, currentSearch }: Props) {
                     <p className="text-sm text-slate-500 mt-1">Discover, manage, and export high-quality potential clients.</p>
                 </div>
                 <div className="flex flex-wrap items-center gap-3">
+                    {selectedIds.length > 0 && (
+                        <LeadToCampaignDialog
+                            selectedEmails={selectedEmails}
+                            audiences={audiences}
+                            onSuccess={() => setSelectedIds([])}
+                        />
+                    )}
                     <Button
                         variant="outline"
                         onClick={handleExport}
@@ -121,17 +153,23 @@ export function LeadsView({ leads, pagination, currentSearch }: Props) {
                     <table className="w-full text-left border-collapse min-w-[900px]">
                         <thead>
                             <tr className="bg-slate-50 border-b border-slate-200">
-                                <th className="px-6 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wider w-16 text-center">#</th>
+                                <th className="px-6 py-3 w-10">
+                                    <Checkbox
+                                        checked={leads.length > 0 && selectedIds.length === leads.length}
+                                        onCheckedChange={toggleAll}
+                                        className="border-slate-300 data-[state=checked]:bg-indigo-600 data-[state=checked]:border-indigo-600"
+                                    />
+                                </th>
                                 <th className="px-6 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wider">Lead Info</th>
-                                <th className="px-6 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wider">Contact</th>
-                                <th className="px-6 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wider">Website</th>
+                                <th className="px-6 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wider">Email</th>
+                                <th className="px-6 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wider">Phone</th>
                                 <th className="px-6 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wider text-right">Actions</th>
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-slate-100">
                             {leads.length === 0 ? (
                                 <tr>
-                                    <td colSpan={5} className="px-6 py-12 text-center text-slate-500">
+                                    <td colSpan={6} className="px-6 py-12 text-center text-slate-500">
                                         <div className="flex flex-col items-center justify-center">
                                             <Search className="h-8 w-8 text-slate-300 mb-3" />
                                             <p className="text-sm font-medium text-slate-700">No leads found</p>
@@ -145,10 +183,14 @@ export function LeadsView({ leads, pagination, currentSearch }: Props) {
                                     const phone = lead.raw?.phoneUnformatted || lead.phones?.[0];
 
                                     return (
-                                        <tr key={lead._id} className="hover:bg-slate-50/80 transition-colors group">
-                                            {/* Serial */}
-                                            <td className="px-6 py-4 text-sm text-slate-500 text-center font-medium">
-                                                {startIndex + index + 1}
+                                        <tr key={lead._id} className={cn("hover:bg-slate-50/80 transition-colors group", selectedIds.includes(lead._id) && "bg-indigo-50/30")}>
+                                            {/* Checkbox */}
+                                            <td className="px-6 py-4">
+                                                <Checkbox
+                                                    checked={selectedIds.includes(lead._id)}
+                                                    onCheckedChange={() => toggleOne(lead._id)}
+                                                    className="border-slate-300 data-[state=checked]:bg-indigo-600 data-[state=checked]:border-indigo-600"
+                                                />
                                             </td>
 
                                             {/* Lead Info (Image + Name) */}
@@ -182,27 +224,30 @@ export function LeadsView({ leads, pagination, currentSearch }: Props) {
                                                 </div>
                                             </td>
 
-                                            {/* Contact (Email + Phone) */}
+                                            {/* Email */}
                                             <td className="px-6 py-4">
-                                                <div className="flex flex-col gap-1.5">
-                                                    {email ? (
-                                                        <div className="flex items-center gap-2 text-sm text-slate-600">
-                                                            <Mail className="h-3.5 w-3.5 text-slate-400" />
-                                                            <span className="truncate max-w-[180px]" title={email}>{email}</span>
-                                                        </div>
-                                                    ) : (
-                                                        <span className="text-xs text-slate-400 italic">No email</span>
-                                                    )}
-                                                    {phone ? (
-                                                        <div className="flex items-center gap-2 text-sm text-slate-600">
-                                                            <Phone className="h-3.5 w-3.5 text-slate-400" />
-                                                            <span>{phone}</span>
-                                                        </div>
-                                                    ) : null}
-                                                </div>
+                                                {email ? (
+                                                    <div className="flex items-center gap-2 text-sm text-slate-700 bg-white border border-slate-200 shadow-sm px-2.5 py-1.5 rounded-md w-fit hover:border-indigo-300 transition-colors">
+                                                        <Mail className="h-4 w-4 text-indigo-500 shrink-0" />
+                                                        <span className="truncate max-w-[160px] font-medium" title={email}>{email}</span>
+                                                    </div>
+                                                ) : (
+                                                    <span className="inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-slate-100 text-slate-500 border border-slate-200">No email</span>
+                                                )}
                                             </td>
 
-                                            {/* Website */}
+                                            {/* Phone */}
+                                            <td className="px-6 py-4">
+                                                {phone ? (
+                                                    <div className="flex items-center gap-2 text-sm text-slate-700 bg-white border border-slate-200 shadow-sm px-2.5 py-1.5 rounded-md w-fit hover:border-emerald-300 transition-colors">
+                                                        <Phone className="h-4 w-4 text-emerald-500 shrink-0" />
+                                                        <span className="whitespace-nowrap font-medium">{phone}</span>
+                                                    </div>
+                                                ) : (
+                                                    <span className="inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-slate-100 text-slate-500 border border-slate-200">No phone</span>
+                                                )}
+                                            </td>
+
                                             <td className="px-6 py-4">
                                                 {lead.website ? (
                                                     <a
@@ -212,7 +257,7 @@ export function LeadsView({ leads, pagination, currentSearch }: Props) {
                                                         className="flex items-center gap-2 text-sm text-indigo-600 hover:text-indigo-800 hover:underline transition-colors w-fit"
                                                     >
                                                         <Globe className="h-3.5 w-3.5 shrink-0" />
-                                                        <span className="truncate max-w-[150px]">{lead.website.replace(/^https?:\/\/(www\.)?/, '')}</span>
+                                                        <span className="truncate max-w-[120px]">{lead.website.replace(/^https?:\/\/(www\.)?/, '')}</span>
                                                     </a>
                                                 ) : (
                                                     <span className="text-xs text-slate-400 italic">N/A</span>

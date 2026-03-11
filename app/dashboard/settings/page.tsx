@@ -16,17 +16,40 @@ export default async function SettingsPage() {
     let user: { id: string; name: string; email: string; role: string } | null = null
 
     try {
-        const [profileRes, notifRes, secRes, userRes] = await Promise.allSettled([
-            settingsApi.getProfile(token),
-            settingsApi.getNotifications(token),
-            settingsApi.getSecurity(token),
-            authApi.me(token),
-        ])
+        const userRes = await authApi.me(token)
+        if (userRes?.user) {
+            const u = userRes.user
+            user = { id: u.id, name: u.name, email: u.email, role: u.role }
 
-        if (profileRes.status === "fulfilled") profile = profileRes.value.data ?? null
-        if (notifRes.status === "fulfilled") notifications = notifRes.value.data ?? null
-        if (secRes.status === "fulfilled") security = secRes.value.data ?? null
-        if (userRes.status === "fulfilled") user = userRes.value.data ?? null
+            profile = {
+                name: u.name,
+                email: u.email,
+                phone: u.phone || "",
+                company: u.company || "",
+                timezone: u.settings?.preferences?.timezone || u.timezone || "UTC",
+                avatar: u.avatar || ""
+            }
+
+            if (u.settings?.notifications) {
+                // Map API specific properties to component expected properties
+                notifications = {
+                    email: u.settings.notifications.marketingEmails ?? true,
+                    push: false,
+                    sms: false,
+                    campaignReports: u.settings.notifications.emailCampaignReports ?? true,
+                    weeklyDigest: u.settings.notifications.systemUpdates ?? true,
+                    productUpdates: u.settings.notifications.systemUpdates ?? false,
+                }
+            }
+
+            if (u.settings?.security) {
+                security = {
+                    twoFactorEnabled: u.settings.security.twoFactorEnabled ?? false,
+                    lastPasswordChange: new Date().toISOString(), // Fallback
+                    loginHistory: []
+                }
+            }
+        }
     } catch {
         // Fall through — view handles null gracefully
     }

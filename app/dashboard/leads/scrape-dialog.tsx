@@ -19,6 +19,7 @@ import { toast } from "sonner"
 export function ScrapeDialog() {
     const [open, setOpen] = useState(false)
     const [query, setQuery] = useState("")
+    const [limit, setLimit] = useState(10)
     const [isPending, startTransition] = useTransition()
 
     function onSubmit(e: React.FormEvent) {
@@ -26,13 +27,14 @@ export function ScrapeDialog() {
         if (!query) return
 
         startTransition(async () => {
-            const res = await scrapeLeadsAction([query])
+            const res = await scrapeLeadsAction(query, limit)
             if (res.error) {
                 toast.error(res.error)
             } else {
                 toast.success(res.message || "Started scraping process. This might take a few minutes.")
                 setOpen(false)
                 setQuery("")
+                setLimit(10)
             }
         })
     }
@@ -53,15 +55,30 @@ export function ScrapeDialog() {
                     </DialogDescription>
                 </DialogHeader>
                 <form onSubmit={onSubmit} className="space-y-4 py-4">
-                    <div className="space-y-2">
-                        <Label htmlFor="query">Search Query</Label>
-                        <Input
-                            id="query"
-                            placeholder="e.g. digital marketing agency in Dubai"
-                            value={query}
-                            onChange={(e) => setQuery(e.target.value)}
-                            required
-                        />
+                    <div className="space-y-4">
+                        <div className="space-y-2">
+                            <Label htmlFor="query">Search Query</Label>
+                            <Input
+                                id="query"
+                                placeholder="e.g. digital marketing agency in Dubai"
+                                value={query}
+                                onChange={(e) => setQuery(e.target.value)}
+                                required
+                            />
+                        </div>
+                        <div className="space-y-2">
+                            <Label htmlFor="limit">Limit (Number of leads)</Label>
+                            <Input
+                                id="limit"
+                                type="number"
+                                min={1}
+                                max={500}
+                                placeholder="10"
+                                value={limit}
+                                onChange={(e) => setLimit(Number(e.target.value))}
+                                required
+                            />
+                        </div>
                     </div>
                     <div className="flex justify-end pt-2">
                         <Button type="submit" disabled={isPending || !query} className="bg-gradient-to-r from-primary to-primary/80">

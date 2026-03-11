@@ -1,7 +1,8 @@
 "use client"
 
-import { useState, useTransition } from "react"
-import { Plus, MoreHorizontal, Trash2, Pencil, FileText } from "lucide-react"
+import { useState, useTransition, useEffect } from "react"
+import dynamic from "next/dynamic"
+import { Plus, MoreHorizontal, Trash2, Pencil, FileText, Code } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent } from "@/components/ui/card"
@@ -29,9 +30,11 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import type { Template } from "@/lib/types"
-import { createTemplateAction, deleteTemplateAction } from "@/lib/template-actions"
+import { createTemplateAction, deleteTemplateAction, updateTemplateAction } from "@/lib/template-actions"
 import { useActionState } from "react"
 import { toast } from "sonner"
+
+const CustomCKEditor = dynamic(() => import("@/components/ui/ckeditor-wrapper"), { ssr: false })
 
 interface Props {
   templates: Template[]
@@ -85,13 +88,14 @@ export function TemplatesView({ templates }: Props) {
                     </div>
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" size="icon" className="h-8 w-8 shrink-0">
-                          <MoreHorizontal className="h-4 w-4" />
+                        <Button variant="ghost" size="icon" className="h-8 w-8 shrink-0 hover:bg-slate-200">
+                          <MoreHorizontal className="h-4 w-4 text-slate-500" />
                           <span className="sr-only">Actions</span>
                         </Button>
                       </DropdownMenuTrigger>
-                      <DropdownMenuContent align="end">
-                        <DropdownMenuItem onClick={() => handleDelete(t._id)} className="text-destructive focus:text-destructive">
+                      <DropdownMenuContent align="end" className="w-40">
+                        <UpdateTemplateDialog template={t} />
+                        <DropdownMenuItem onClick={() => handleDelete(t._id)} className="text-destructive focus:text-destructive focus:bg-destructive/10 cursor-pointer">
                           <Trash2 className="h-4 w-4 mr-2" /> Delete
                         </DropdownMenuItem>
                       </DropdownMenuContent>
@@ -114,6 +118,14 @@ export function TemplatesView({ templates }: Props) {
 function CreateTemplateDialog() {
   const [open, setOpen] = useState(false)
   const [state, formAction, pending] = useActionState(createTemplateAction, null)
+  const [bodyContent, setBodyContent] = useState("<p>Write your amazing email here...</p>")
+
+  useEffect(() => {
+    if (state?.success || (!state?.error && open === false)) {
+      setOpen(false)
+      setBodyContent("<p>Write your amazing email here...</p>")
+    }
+  }, [state, open])
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -152,12 +164,82 @@ function CreateTemplateDialog() {
             </Select>
           </div>
           <div className="flex flex-col gap-2">
-            <Label htmlFor="tpl-body">HTML Body</Label>
-            <Textarea id="tpl-body" name="body" rows={6} placeholder="<html><body>...</body></html>" />
+            <Label>Email Content</Label>
+            <CustomCKEditor value={bodyContent} onChange={setBodyContent} />
+            <input type="hidden" name="body" value={bodyContent} />
           </div>
-          <Button type="submit" disabled={pending}>
-            {pending ? "Creating..." : "Create Template"}
-          </Button>
+          <div className="flex justify-end gap-2 pt-4 border-t border-border mt-2">
+            <Button type="button" variant="outline" onClick={() => setOpen(false)}>Cancel</Button>
+            <Button type="submit" disabled={pending}>
+              {pending ? "Creating..." : "Create Template"}
+            </Button>
+          </div>
+        </form>
+      </DialogContent>
+    </Dialog>
+  )
+}
+
+function UpdateTemplateDialog({ template }: { template: Template }) {
+  const [open, setOpen] = useState(false)
+  const [state, formAction, pending] = useActionState(updateTemplateAction, null)
+  const [bodyContent, setBodyContent] = useState(template.body || "")
+
+  useEffect(() => {
+    if (state?.success || (!state?.error && open === false)) {
+      setOpen(false)
+    }
+  }, [state, open])
+
+  return (
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger asChild>
+        <DropdownMenuItem onSelect={(e) => e.preventDefault()} className="cursor-pointer">
+          <Pencil className="h-4 w-4 mr-2" /> Edit
+        </DropdownMenuItem>
+      </DialogTrigger>
+      <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
+        <DialogHeader>
+          <DialogTitle>Edit Template</DialogTitle>
+        </DialogHeader>
+        {state?.error && (
+          <div className="border border-destructive/30 bg-destructive/10 p-3 text-sm text-destructive rounded-md">{state.error}</div>
+        )}
+        <form action={formAction} className="flex flex-col gap-5 mt-2">
+          <input type="hidden" name="id" value={template._id} />
+          <div className="grid grid-cols-2 gap-4">
+            <div className="flex flex-col gap-2">
+              <Label htmlFor={`edit-tpl-name-${template._id}`}>Name *</Label>
+              <Input id={`edit-tpl-name-${template._id}`} name="name" required defaultValue={template.name} />
+            </div>
+            <div className="flex flex-col gap-2">
+              <Label htmlFor={`edit-tpl-subject-${template._id}`}>Subject *</Label>
+              <Input id={`edit-tpl-subject-${template._id}`} name="subject" required defaultValue={template.subject} />
+            </div>
+          </div>
+          <div className="flex flex-col gap-2">
+            <Label>Category</Label>
+            <Select name="category" defaultValue={template.category || "welcome"}>
+              <SelectTrigger><SelectValue /></SelectTrigger>
+              <SelectContent>
+                <SelectItem value="welcome">Welcome</SelectItem>
+                <SelectItem value="promotional">Promotional</SelectItem>
+                <SelectItem value="transactional">Transactional</SelectItem>
+                <SelectItem value="newsletter">Newsletter</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+          <div className="flex flex-col gap-2">
+            <Label>Email Content</Label>
+            <CustomCKEditor value={bodyContent} onChange={setBodyContent} />
+            <input type="hidden" name="body" value={bodyContent} />
+          </div>
+          <div className="flex justify-end gap-2 pt-4 border-t border-border mt-2">
+            <Button type="button" variant="outline" onClick={() => setOpen(false)}>Cancel</Button>
+            <Button type="submit" disabled={pending}>
+              {pending ? "Saving Changes..." : "Update Template"}
+            </Button>
+          </div>
         </form>
       </DialogContent>
     </Dialog>

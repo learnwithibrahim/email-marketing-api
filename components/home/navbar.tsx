@@ -18,7 +18,7 @@ export default function Navbar() {
   };
 
   const navLinks = [
-    { label: "Features", href: "/features" },
+    { label: "Features", href: "/fratures" },
     { label: "Pricing", href: "/pricing" },
     { label: "Integrations", href: "/integrations" },
   ];

@@ -35,60 +35,106 @@ export default async function DashboardPage() {
     <div className="flex flex-col gap-8 max-w-[1600px] mx-auto animate-in fade-in slide-in-from-bottom-4 duration-500">
 
       {/* Header */}
-      <div>
-        <h1 className="text-3xl md:text-4xl font-black tracking-tight text-[#2e2692]">Dashboard Overview</h1>
-        <p className="text-[16px] font-medium text-gray-600 mt-2">
-          Welcome back. Here is the latest data on your email marketing performance.
-        </p>
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+          <h1 className="text-3xl font-bold tracking-tight text-foreground">Dashboard</h1>
+          <p className="text-muted-foreground mt-1 text-sm md:text-base">
+            Detailed overview of your email marketing performance and reach.
+          </p>
+        </div>
+        <div className="flex items-center gap-3">
+          <div className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
+          <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">System Live</span>
+        </div>
       </div>
 
       {/* Stats Grid */}
-      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-        <StatCard title="Total Subscribers" value={stats.totalSubscribers} icon={Users} />
-        <StatCard title="Campaigns" value={stats.totalCampaigns} icon={Send} />
-        <StatCard title="Audiences" value={stats.totalAudiences} icon={UsersRound} />
-        <StatCard title="Sent This Month" value={stats.sentThisMonth} icon={Mail} />
+      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4 stagger-children">
+        <StatCard
+          title="Total Subscribers"
+          value={stats.totalSubscribers}
+          icon={Users}
+          description="Total active contacts"
+          trend={{ value: 12.5, isPositive: true }}
+        />
+        <StatCard
+          title="Total Campaigns"
+          value={stats.totalCampaigns}
+          icon={Send}
+          description="Campaigns delivered"
+          trend={{ value: 8.2, isPositive: true }}
+        />
+        <StatCard
+          title="Active Audiences"
+          value={stats.totalAudiences}
+          icon={UsersRound}
+          description="Segmented user groups"
+          trend={{ value: 3.1, isPositive: false }}
+        />
+        <StatCard
+          title="Sent This Month"
+          value={stats.sentThisMonth}
+          icon={Mail}
+          description="Emails successfully sent"
+          trend={{ value: 24.8, isPositive: true }}
+        />
       </div>
 
       {/* Charts */}
       <DashboardCharts />
 
       {/* Recent Campaigns Table */}
-      <Card>
-        <CardHeader className="border-b-[3px] border-[#2e2692] bg-[#f8f9fc] rounded-t-xl">
-          <CardTitle>Recent Campaigns</CardTitle>
+      <Card className="premium-card-static border-none shadow-sm overflow-hidden animate-fade-in" style={{ animationDelay: '400ms' }}>
+        <CardHeader className="bg-white dark:bg-slate-900 px-6 py-5 flex flex-row items-center justify-between border-b">
+          <div>
+            <CardTitle className="text-lg font-bold">Recent Campaigns</CardTitle>
+            <p className="text-xs text-muted-foreground mt-0.5">Quick look at your latest campaign activities</p>
+          </div>
+          <Badge variant="outline" className="h-7 text-[10px] font-bold">Updated Just Now</Badge>
         </CardHeader>
         <CardContent className="p-0">
           {recentCampaigns.length === 0 ? (
-            <div className="p-12 text-center flex flex-col items-center">
-              <div className="h-16 w-16 bg-gray-100 rounded-full flex items-center justify-center mb-4 border-[2px] border-gray-200">
-                <Send className="h-8 w-8 text-gray-400" />
+            <div className="p-16 text-center flex flex-col items-center">
+              <div className="h-20 w-20 bg-primary/5 rounded-full flex items-center justify-center mb-6">
+                <Send className="h-10 w-10 text-primary/40" />
               </div>
-              <p className="text-[16px] font-bold text-[#2e2692]">No campaigns yet</p>
-              <p className="text-[14px] text-gray-500 font-medium mt-1">Create your first campaign to get started.</p>
+              <p className="text-lg font-semibold text-foreground">No active campaigns</p>
+              <p className="text-sm text-muted-foreground mt-2 max-w-xs mx-auto">You haven&apos;t started any campaigns yet. Launch one today to see your results.</p>
             </div>
           ) : (
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
-                <thead className="bg-white">
-                  <tr className="border-b-[3px] border-[#2e2692] text-left">
-                    <th className="p-5 text-[13px] font-extrabold uppercase tracking-widest text-[#2e2692]">Campaign Name</th>
-                    <th className="p-5 text-[13px] font-extrabold uppercase tracking-widest text-[#2e2692]">Status</th>
-                    <th className="p-5 text-[13px] font-extrabold uppercase tracking-widest text-[#2e2692] text-right">Sent</th>
-                    <th className="p-5 text-[13px] font-extrabold uppercase tracking-widest text-[#2e2692] text-right">Opened</th>
+                <thead>
+                  <tr className="bg-muted/30 border-b">
+                    <th className="px-6 py-4 text-[12px] font-bold uppercase tracking-wider text-muted-foreground text-left">Campaign Details</th>
+                    <th className="px-6 py-4 text-[12px] font-bold uppercase tracking-wider text-muted-foreground text-left">Current Status</th>
+                    <th className="px-6 py-4 text-[12px] font-bold uppercase tracking-wider text-muted-foreground text-right">Sent Count</th>
+                    <th className="px-6 py-4 text-[12px] font-bold uppercase tracking-wider text-muted-foreground text-right pr-8">Open Metrics</th>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody className="divide-y border-t-0">
                   {recentCampaigns.map((c) => (
-                    <tr key={c._id} className="border-b-[2px] border-gray-100 last:border-0 hover:bg-[#f8f9fc] transition-colors group">
-                      <td className="p-5 font-bold text-[#120f3a] text-[15px]">{c.name}</td>
-                      <td className="p-5">
-                        <Badge variant={c.status === "sent" ? "default" : "secondary"}>
+                    <tr key={c._id} className="hover:bg-muted/20 transition-colors group">
+                      <td className="px-6 py-5">
+                        <div className="flex flex-col gap-0.5">
+                          <span className="font-bold text-foreground text-[15px] group-hover:text-primary transition-colors">{c.name}</span>
+                          <span className="text-[11px] text-muted-foreground flex items-center gap-1.5">
+                            <div className="h-1 w-1 rounded-full bg-muted-foreground" />
+                            ID: {c._id.substring(0, 8)}...
+                          </span>
+                        </div>
+                      </td>
+                      <td className="px-6 py-5">
+                        <Badge variant={c.status === "sent" ? "default" : "secondary"} className="h-6 text-[10px] font-black">
                           {c.status}
                         </Badge>
                       </td>
-                      <td className="p-5 text-right font-medium text-gray-600">{c.sent}</td>
-                      <td className="p-5 text-right font-bold text-[#2e2692]">{c.opened}</td>
+                      <td className="px-6 py-5 text-right font-semibold text-foreground/80 tabular-nums">
+                        {c.sent?.toLocaleString() || 0}
+                      </td>
+                      <td className="px-6 py-5 text-right pr-8 tabular-nums font-bold text-primary">
+                        {c.opened?.toLocaleString() || 0}
+                      </td>
                     </tr>
                   ))}
                 </tbody>

@@ -4,18 +4,14 @@ import { revalidatePath } from "next/cache"
 import { leadsApi } from "./api"
 import { getToken } from "./auth"
 
-export async function scrapeLeadsAction(searchStringsArray: string[]) {
+export async function scrapeLeadsAction(keyword: string, limit: number = 10) {
   try {
     const token = await getToken()
     if (!token) return { error: "Not authenticated" }
 
     const res = await leadsApi.scrape({
-      actorId: "compass/crawler-google-places",
-      input: {
-        searchStringsArray,
-        maxCrawledPlacesPerSearch: 30,
-        language: "en",
-      },
+      keyword,
+      limit,
     }, token)
 
     if (!res.ok) return { error: res.error || "Failed to start scraping" }

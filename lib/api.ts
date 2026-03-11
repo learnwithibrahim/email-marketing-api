@@ -84,7 +84,7 @@ export const authApi = {
     })
   },
   me(token: string) {
-    return request<ApiResponse<{ id: string; name: string; email: string; role: string }>>("/api/v1/auth/me", {}, token)
+    return request<{ ok: boolean; user: any }>("/api/v1/auth/me", {}, token)
   },
   changePassword(body: { currentPassword: string; newPassword: string }, token: string) {
     return request<ApiResponse>("/api/v1/auth/change-password", {
@@ -338,12 +338,8 @@ export const leadsApi = {
     return request<{ ok: boolean; items: Lead[]; total: number; page: number; limit: number }>(`/api/v1/leads?${qs}`, {}, token)
   },
   scrape(body: {
-    actorId: string
-    input: {
-      searchStringsArray: string[]
-      maxCrawledPlacesPerSearch: number
-      language: string
-    }
+    keyword: string
+    limit: number
   }, token?: string) {
     return request<ApiResponse>("/api/v1/scrape", {
       method: "POST",

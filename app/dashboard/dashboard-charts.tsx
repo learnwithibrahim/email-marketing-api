@@ -16,9 +16,9 @@ const clickRateData = [
 const CustomTooltip = ({ active, payload, label }: any) => {
   if (active && payload && payload.length) {
     return (
-      <div className="bg-white border-[3px] border-[#2e2692] p-3 shadow-[4px_4px_0px_0px_#2e2692] rounded-xl">
-        <p className="font-extrabold text-[#2e2692] uppercase tracking-wider text-[12px] mb-1">{label}</p>
-        <p className="font-black text-xl text-[#120f3a]">
+      <div className="bg-popover border border-border/50 p-3 shadow-xl rounded-xl backdrop-blur-md">
+        <p className="font-bold text-muted-foreground uppercase tracking-wider text-[10px] mb-1">{label}</p>
+        <p className="font-bold text-lg text-foreground">
           {payload[0].value}%
         </p>
       </div>
@@ -29,36 +29,48 @@ const CustomTooltip = ({ active, payload, label }: any) => {
 
 export function DashboardCharts() {
   return (
-    <div className="grid gap-6 lg:grid-cols-2">
-      <Card>
-        <CardHeader className="border-b-[3px] border-[#2e2692] pb-4 mb-4">
-          <CardTitle>Open Rate (%)</CardTitle>
+    <div className="grid gap-6 lg:grid-cols-2 stagger-children">
+      <Card className="premium-card-static border-none shadow-sm animate-fade-in" style={{ animationDelay: '100ms' }}>
+        <CardHeader className="border-b pb-4 mb-4">
+          <CardTitle className="text-base font-bold flex items-center gap-2">
+            <div className="h-1.5 w-1.5 rounded-full bg-primary" />
+            Open Rate Trends
+          </CardTitle>
         </CardHeader>
         <CardContent>
           <ResponsiveContainer width="100%" height={260}>
             <AreaChart data={openRateData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" vertical={false} />
-              <XAxis dataKey="name" tick={{ fontSize: 13, fontWeight: 700, fill: "#6b7280" }} axisLine={false} tickLine={false} dy={10} />
-              <YAxis tick={{ fontSize: 13, fontWeight: 700, fill: "#6b7280" }} axisLine={false} tickLine={false} />
-              <Tooltip content={<CustomTooltip />} cursor={{ stroke: '#2e2692', strokeWidth: 2, strokeDasharray: '5 5' }} />
-              <Area type="monotone" dataKey="rate" stroke="#2e2692" fill="#22c55e" fillOpacity={0.2} strokeWidth={4} activeDot={{ r: 8, fill: '#2e2692', stroke: '#fff', strokeWidth: 3 }} />
+              <defs>
+                <linearGradient id="colorRate" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor="hsl(var(--primary))" stopOpacity={0.3} />
+                  <stop offset="95%" stopColor="hsl(var(--primary))" stopOpacity={0} />
+                </linearGradient>
+              </defs>
+              <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" vertical={false} strokeOpacity={0.5} />
+              <XAxis dataKey="name" tick={{ fontSize: 12, fontWeight: 500, fill: "hsl(var(--muted-foreground))" }} axisLine={false} tickLine={false} dy={10} />
+              <YAxis tick={{ fontSize: 12, fontWeight: 500, fill: "hsl(var(--muted-foreground))" }} axisLine={false} tickLine={false} />
+              <Tooltip content={<CustomTooltip />} cursor={{ stroke: 'hsl(var(--primary))', strokeWidth: 2, strokeDasharray: '5 5' }} />
+              <Area type="monotone" dataKey="rate" stroke="hsl(var(--primary))" fillOpacity={1} fill="url(#colorRate)" strokeWidth={3} activeDot={{ r: 6, fill: 'hsl(var(--primary))', stroke: '#fff', strokeWidth: 2 }} />
             </AreaChart>
           </ResponsiveContainer>
         </CardContent>
       </Card>
 
-      <Card>
-        <CardHeader className="border-b-[3px] border-[#2e2692] pb-4 mb-4">
-          <CardTitle>Click Rate (%)</CardTitle>
+      <Card className="premium-card-static border-none shadow-sm animate-fade-in" style={{ animationDelay: '200ms' }}>
+        <CardHeader className="border-b pb-4 mb-4">
+          <CardTitle className="text-base font-bold flex items-center gap-2">
+            <div className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+            Click-Through Performance
+          </CardTitle>
         </CardHeader>
         <CardContent>
           <ResponsiveContainer width="100%" height={260}>
             <BarChart data={clickRateData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" vertical={false} />
-              <XAxis dataKey="name" tick={{ fontSize: 13, fontWeight: 700, fill: "#6b7280" }} axisLine={false} tickLine={false} dy={10} />
-              <YAxis tick={{ fontSize: 13, fontWeight: 700, fill: "#6b7280" }} axisLine={false} tickLine={false} />
-              <Tooltip content={<CustomTooltip />} cursor={{ fill: '#f3f4f6' }} />
-              <Bar dataKey="rate" fill="#2e2692" radius={[6, 6, 0, 0]} />
+              <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" vertical={false} strokeOpacity={0.5} />
+              <XAxis dataKey="name" tick={{ fontSize: 12, fontWeight: 500, fill: "hsl(var(--muted-foreground))" }} axisLine={false} tickLine={false} dy={10} />
+              <YAxis tick={{ fontSize: 12, fontWeight: 500, fill: "hsl(var(--muted-foreground))" }} axisLine={false} tickLine={false} />
+              <Tooltip content={<CustomTooltip />} cursor={{ fill: 'hsl(var(--muted))', opacity: 0.4 }} />
+              <Bar dataKey="rate" fill="hsl(var(--primary))" radius={[4, 4, 0, 0]} barSize={32} />
             </BarChart>
           </ResponsiveContainer>
         </CardContent>

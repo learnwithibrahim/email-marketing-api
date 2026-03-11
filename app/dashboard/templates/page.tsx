@@ -10,8 +10,8 @@ async function getTemplates() {
     if (!token) return []
     const res = await templatesApi.list({}, token)
     if (Array.isArray(res.data)) return res.data
-    if (res.data && typeof res.data === "object" && "templates" in res.data) {
-      return (res.data as any).templates || []
+    if (res.data && typeof res.data === "object" && "items" in res.data) {
+      return (res.data as any).items || []
     }
     return []
   } catch {

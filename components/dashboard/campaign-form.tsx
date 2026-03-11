@@ -1,10 +1,12 @@
 "use client"
 
-import { useActionState } from "react"
+import { useActionState, useState } from "react"
+import dynamic from "next/dynamic"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { Mail, Settings, Tag, Target, Send, ChevronLeft, Type } from "lucide-react"
 import { Textarea } from "@/components/ui/textarea"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import {
@@ -16,6 +18,8 @@ import {
 } from "@/components/ui/select"
 import type { Campaign, Audience } from "@/lib/types"
 
+const CustomCKEditor = dynamic(() => import("@/components/ui/ckeditor-wrapper"), { ssr: false })
+
 interface Props {
   campaign?: Campaign
   audiences: Audience[]
@@ -25,6 +29,7 @@ interface Props {
 
 export function CampaignForm({ campaign, audiences, action, submitLabel }: Props) {
   const [state, formAction, pending] = useActionState(action, null)
+  const [bodyContent, setBodyContent] = useState(campaign?.body || "")
 
   return (
     <form action={formAction}>
@@ -38,35 +43,44 @@ export function CampaignForm({ campaign, audiences, action, submitLabel }: Props
 
       <div className="grid gap-6 lg:grid-cols-3">
         <div className="lg:col-span-2 flex flex-col gap-6">
-          <Card>
-            <CardHeader className="border-b border-border">
-              <CardTitle className="text-base">Campaign Details</CardTitle>
+          <Card className="shadow-sm border-slate-200">
+            <CardHeader className="bg-slate-50/50 border-b border-slate-100">
+              <CardTitle className="text-base flex items-center gap-2 font-semibold">
+                <Mail className="h-4 w-4 text-primary" />
+                Campaign Content
+              </CardTitle>
             </CardHeader>
-            <CardContent className="flex flex-col gap-4 pt-6">
+            <CardContent className="flex flex-col gap-5 pt-6">
               <div className="flex flex-col gap-2">
-                <Label htmlFor="name">Campaign Name *</Label>
-                <Input id="name" name="name" defaultValue={campaign?.name} required placeholder="e.g. Summer Sale Newsletter" />
+                <Label htmlFor="name" className="text-sm font-medium">Campaign Name *</Label>
+                <Input id="name" name="name" defaultValue={campaign?.name} required placeholder="e.g. Summer Sale Newsletter" className="h-11 shadow-none focus-visible:ring-primary/20" />
               </div>
               <div className="flex flex-col gap-2">
-                <Label htmlFor="subject">Subject Line *</Label>
-                <Input id="subject" name="subject" defaultValue={campaign?.subject} required placeholder="e.g. Don't miss our summer sale!" />
+                <Label htmlFor="subject" className="text-sm font-medium">Subject Line *</Label>
+                <Input id="subject" name="subject" defaultValue={campaign?.subject} required placeholder="e.g. Don't miss our summer sale!" className="h-11 shadow-none focus-visible:ring-primary/20" />
               </div>
               <div className="flex flex-col gap-2">
-                <Label htmlFor="body">Email Body (HTML)</Label>
-                <Textarea id="body" name="body" defaultValue={campaign?.body} rows={10} placeholder="<html><body>Your email content...</body></html>" />
+                <Label>Email Body (HTML)</Label>
+                <CustomCKEditor value={bodyContent} onChange={setBodyContent} />
+                <input type="hidden" name="body" value={bodyContent} />
               </div>
             </CardContent>
           </Card>
         </div>
 
         <div className="flex flex-col gap-6">
-          <Card>
-            <CardHeader className="border-b border-border">
-              <CardTitle className="text-base">Configuration</CardTitle>
+          <Card className="shadow-sm border-slate-200">
+            <CardHeader className="bg-slate-50/50 border-b border-slate-100">
+              <CardTitle className="text-base flex items-center gap-2 font-semibold">
+                <Settings className="h-4 w-4 text-primary" />
+                Configuration
+              </CardTitle>
             </CardHeader>
-            <CardContent className="flex flex-col gap-4 pt-6">
+            <CardContent className="flex flex-col gap-5 pt-6">
               <div className="flex flex-col gap-2">
-                <Label>Type *</Label>
+                <Label className="text-sm font-medium flex items-center gap-1.5">
+                  <Type className="h-3.5 w-3.5" /> Type *
+                </Label>
                 <Select name="type" defaultValue={campaign?.type || "newsletter"}>
                   <SelectTrigger>
                     <SelectValue />
@@ -93,9 +107,11 @@ export function CampaignForm({ campaign, audiences, action, submitLabel }: Props
                 </Select>
               </div>
               <div className="flex flex-col gap-2">
-                <Label>Audience *</Label>
+                <Label className="text-sm font-medium flex items-center gap-1.5">
+                  <Target className="h-3.5 w-3.5" /> Audience *
+                </Label>
                 <Select name="audienceId" defaultValue={typeof campaign?.audienceId === "object" ? campaign.audienceId._id : campaign?.audienceId || ""}>
-                  <SelectTrigger>
+                  <SelectTrigger className="h-11 shadow-none focus:ring-primary/20">
                     <SelectValue placeholder="Select audience" />
                   </SelectTrigger>
                   <SelectContent>
@@ -107,21 +123,30 @@ export function CampaignForm({ campaign, audiences, action, submitLabel }: Props
                   </SelectContent>
                 </Select>
               </div>
-              <div className="flex flex-col gap-2">
-                <Label htmlFor="tags">Tags</Label>
-                <Input id="tags" name="tags" defaultValue={campaign?.tags?.join(", ")} placeholder="tag1, tag2, tag3" />
-                <p className="text-xs text-muted-foreground">Comma-separated</p>
+              <div className="flex flex-col gap-2 border-t pt-2 border-slate-100">
+                <Label htmlFor="tags" className="text-sm font-medium flex items-center gap-1.5">
+                  <Tag className="h-3.5 w-3.5" /> Tags
+                </Label>
+                <Input id="tags" name="tags" defaultValue={campaign?.tags?.join(", ")} placeholder="tag1, tag2, tag3" className="h-11 shadow-none focus-visible:ring-primary/20" />
+                <p className="text-[11px] text-muted-foreground">Comma-separated</p>
               </div>
             </CardContent>
           </Card>
 
-          <div className="flex gap-3">
-            <Link href="/dashboard/campaigns" className="flex-1">
-              <Button variant="outline" className="w-full" type="button">Cancel</Button>
-            </Link>
-            <Button type="submit" className="flex-1" disabled={pending}>
-              {pending ? "Saving..." : submitLabel}
+          <div className="flex flex-col gap-3">
+            <Button type="submit" className="h-11 font-semibold text-base shadow-lg shadow-primary/20 transition-all hover:scale-[1.02] active:scale-[0.98]" disabled={pending}>
+              {pending ? "Saving..." : (
+                <span className="flex items-center gap-2">
+                  <Send className="h-4 w-4" />
+                  {submitLabel}
+                </span>
+              )}
             </Button>
+            <Link href="/dashboard/campaigns">
+              <Button variant="ghost" className="w-full text-muted-foreground hover:text-foreground" type="button">
+                <ChevronLeft className="h-4 w-4 mr-1" /> Back to Campaigns
+              </Button>
+            </Link>
           </div>
         </div>
       </div>
