@@ -22,6 +22,8 @@ import {
   ChevronDown,
 } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { useAuthStore } from "@/lib/store"
+import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import {
@@ -44,21 +46,17 @@ const navItems = [
   { href: "/dashboard/settings", label: "Settings", icon: Settings },
 ]
 
-interface DashboardHeaderProps {
-  user?: {
-    name?: string | null
-    email?: string | null
-    image?: string | null
-  }
-}
-
-export function DashboardHeader({ user }: DashboardHeaderProps) {
+export function DashboardHeader() {
   const [open, setOpen] = useState(false)
   const pathname = usePathname()
+  const user = useAuthStore((state) => state.user)
 
   const userInitials = user?.name
-    ? user.name.split(" ").map(n => n[0]).join("").toUpperCase().slice(0, 2)
+    ? user.name.split(" ").map((n) => n[0]).join("").toUpperCase().slice(0, 2)
     : "U"
+
+  const defaultCredits = user?.credits ?? 300;
+  const scrapesLeft = Math.max(0, 3 - (user?.scrapeCount || 0));
 
   return (
     <header className="sticky top-0 z-40 flex items-center justify-between px-4 lg:px-6 h-16 border-b border-border/50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -78,6 +76,27 @@ export function DashboardHeader({ user }: DashboardHeaderProps) {
       </div>
 
       <div className="flex items-center gap-2">
+        {/* Subscription / Credits Status */}
+        {user && (
+          <div className="hidden sm:flex items-center gap-2 mr-2">
+            {!user.isPremium ? (
+              <Badge variant="secondary" className="bg-orange-100 text-orange-800 hover:bg-orange-200 border-orange-200">
+                Free Trial: {scrapesLeft}/3 Scrapes
+              </Badge>
+            ) : (
+              <Badge variant="default" className="bg-[#2e2692] hover:bg-[#2e2692]/90">
+                Premium
+              </Badge>
+            )}
+            <Badge variant="outline" className="border-[#2e2692]/30 text-[#2e2692]">
+              {defaultCredits} Credits
+            </Badge>
+            <Button asChild variant="outline" size="sm" className="h-7 text-xs border-[#22c55e] text-[#22c55e] hover:bg-[#22c55e] hover:text-[#120f3a]">
+              <Link href="/pricing">Upgrade</Link>
+            </Button>
+          </div>
+        )}
+
         {/* Notifications */}
         <Button variant="ghost" size="icon" className="relative" aria-label="Notifications">
           <Bell className="h-5 w-5" />
@@ -89,7 +108,7 @@ export function DashboardHeader({ user }: DashboardHeaderProps) {
           <DropdownMenuTrigger asChild>
             <Button variant="ghost" className="flex items-center gap-2 px-2 h-auto py-1.5">
               <Avatar className="h-8 w-8">
-                <AvatarImage src={user?.image ?? ""} alt={user?.name ?? ""} />
+                <AvatarImage src={user?.avatar ?? ""} alt={user?.name ?? ""} />
                 <AvatarFallback className="bg-primary/10 text-primary text-sm font-medium">
                   {userInitials}
                 </AvatarFallback>

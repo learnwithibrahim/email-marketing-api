@@ -14,13 +14,18 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { scrapeLeadsAction } from "@/lib/lead-actions"
+import { getUserAction } from "@/lib/actions"
+import { useAuthStore } from "@/lib/store"
 import { toast } from "sonner"
+import { useRouter } from "next/navigation"
 
 export function ScrapeDialog() {
     const [open, setOpen] = useState(false)
     const [query, setQuery] = useState("")
     const [limit, setLimit] = useState(10)
     const [isPending, startTransition] = useTransition()
+    const router = useRouter()
+    const setUser = useAuthStore(state => state.setUser)
 
     function onSubmit(e: React.FormEvent) {
         e.preventDefault()
@@ -29,12 +34,28 @@ export function ScrapeDialog() {
         startTransition(async () => {
             const res = await scrapeLeadsAction(query, limit)
             if (res.error) {
-                toast.error(res.error)
+                const isUpgradeError = [
+                    "Trial expired. Upgrade required to generate leads",
+                    "Insufficient credits. Upgrade required to generate leads",
+                    "No credits left. Upgrade required to generate leads"
+                ].some(msg => res.error?.includes(msg))
+
+                if (isUpgradeError) {
+                    toast.error("Upgrade Required", { description: res.error })
+                    router.push("/pricing")
+                } else {
+                    toast.error(res.error)
+                }
             } else {
                 toast.success(res.message || "Started scraping process. This might take a few minutes.")
                 setOpen(false)
                 setQuery("")
                 setLimit(10)
+                // Quietly refresh credits
+                const userRes = await getUserAction()
+                if (userRes.success && userRes.user) {
+                    setUser(userRes.user)
+                }
             }
         })
     }

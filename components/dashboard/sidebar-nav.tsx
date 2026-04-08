@@ -16,9 +16,12 @@ import {
   Target,
   Menu,
   X,
+  CreditCard,
+  Coins,
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { logoutAction } from "@/lib/actions"
+import { useAuthStore } from "@/lib/store"
 
 const navItems = [
   { href: "/dashboard", label: "Overview", icon: LayoutDashboard },
@@ -34,6 +37,8 @@ const navItems = [
 export function SidebarNav() {
   const pathname = usePathname()
   const [isOpen, setIsOpen] = useState(false)
+  const user = useAuthStore((state) => state.user)
+  const isAdmin = user?.role === "admin" || (user as any)?.role === "superadmin"
 
   // Auto-close mobile menu on route change
   useEffect(() => {
@@ -103,7 +108,44 @@ export function SidebarNav() {
               </Link>
             )
           })}
+
+          {/* Admin section */}
+          {isAdmin && (
+            <>
+              <p className="px-3 text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-6 mb-4">
+                Admin
+              </p>
+              <Link
+                href="/dashboard/payment-requests"
+                className={cn(
+                  "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all",
+                  pathname === "/dashboard/payment-requests" || pathname.startsWith("/dashboard/payment-requests/")
+                    ? "bg-indigo-50 text-indigo-700"
+                    : "text-slate-600 hover:bg-slate-50 hover:text-slate-900"
+                )}
+              >
+                <CreditCard className={cn("h-5 w-5", pathname.startsWith("/dashboard/payment-requests") ? "text-indigo-600" : "text-slate-400")} />
+                Payment Requests
+              </Link>
+            </>
+          )}
         </nav>
+
+        {/* Credits Widget */}
+        {user && (
+          <div className="px-4 py-3 border-t border-slate-100">
+            <div className="bg-gradient-to-br from-indigo-50 to-violet-50 rounded-xl p-3 border border-indigo-100">
+              <div className="flex items-center gap-2 mb-1">
+                <Coins className="h-4 w-4 text-indigo-600" />
+                <span className="text-xs font-bold text-indigo-700 uppercase tracking-wider">Credits</span>
+              </div>
+              <p className="text-xl font-extrabold text-[#140D36]">{user.credits ?? 300}</p>
+              {!user.isPremium && (
+                <p className="text-[10px] text-amber-600 font-bold mt-1">Free Trial • {Math.max(0, 3 - (user.scrapeCount || 0))}/3 scrapes left</p>
+              )}
+            </div>
+          </div>
+        )}
 
         {/* Footer */}
         <div className="p-4 border-t border-slate-100">

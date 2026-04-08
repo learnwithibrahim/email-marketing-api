@@ -34,6 +34,10 @@ export interface User {
     notifications: { email: boolean; push: boolean }
     security: { twoFactorEnabled: boolean }
   }
+  credits?: number
+  scrapeCount?: number
+  trialStartDate?: string
+  isPremium?: boolean
 }
 
 export interface LoginResponse {

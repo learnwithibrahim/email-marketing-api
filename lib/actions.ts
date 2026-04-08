@@ -132,3 +132,16 @@ export async function resendOtpAction(email: string) {
     return { error: msg }
   }
 }
+
+export async function getUserAction() {
+  const token = await getToken()
+  if (!token) return { error: "No token" }
+  try {
+    const res = await authApi.me(token)
+    if (res.ok && res.user) return { success: true, user: res.user }
+    return { error: "Failed to fetch user" }
+  } catch (e: unknown) {
+    return { error: "Failed to fetch user" }
+  }
+}
+

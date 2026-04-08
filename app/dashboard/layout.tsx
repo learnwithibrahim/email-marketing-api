@@ -1,9 +1,26 @@
 import { SidebarNav } from "@/components/dashboard/sidebar-nav"
 import { DashboardHeader } from "@/components/dashboard/header"
+import { StoreInitializer } from "@/components/store-initializer"
+import { authApi } from "@/lib/api"
+import { getToken } from "@/lib/auth"
 
-export default function DashboardLayout({ children }: { children: React.ReactNode }) {
+export default async function DashboardLayout({ children }: { children: React.ReactNode }) {
+  const token = await getToken()
+  let user = null
+  if (token) {
+    try {
+      const res = await authApi.me(token)
+      if (res.ok && res.user) {
+        user = res.user
+      }
+    } catch {
+      // Ignored
+    }
+  }
+
   return (
     <div className="min-h-screen bg-[#f4f5f8]">
+      <StoreInitializer user={user} />
       {/* 1. Sidebar Component */}
       <SidebarNav />
 

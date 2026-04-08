@@ -347,3 +347,26 @@ export const leadsApi = {
     }, token)
   },
 }
+
+// ============ Payments API ============
+
+export const paymentsApi = {
+  submitRequest(body: {
+    packageAmount: number
+    transactionId: string
+    note?: string
+  }, token?: string) {
+    return request<ApiResponse>("/api/v1/payment-request", {
+      method: "POST",
+      body: JSON.stringify(body),
+    }, token)
+  },
+  list(token?: string) {
+    return request<{ ok: boolean; data: any[] }>("/api/v1/payment-request", {}, token)
+  },
+  approve(id: string, token?: string) {
+    return request<ApiResponse>(`/api/v1/payment-request/${id}/approve`, {
+      method: "PATCH",
+    }, token)
+  },
+}
