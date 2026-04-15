@@ -7,6 +7,7 @@ import Image from "next/image"
 import {
   LayoutDashboard,
   Send,
+  Mail,
   Users,
   UsersRound,
   FileText,
@@ -26,6 +27,7 @@ import { useAuthStore } from "@/lib/store"
 const navItems = [
   { href: "/dashboard", label: "Overview", icon: LayoutDashboard },
   { href: "/dashboard/campaigns", label: "Campaigns", icon: Send },
+  { href: "/dashboard/send-email", label: "Email Sender", icon: Mail },
   { href: "/dashboard/subscribers", label: "Subscribers", icon: Users },
   { href: "/dashboard/audiences", label: "Audiences", icon: UsersRound },
   { href: "/dashboard/leads", label: "Leads", icon: Target },

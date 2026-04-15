@@ -41,9 +41,19 @@ export default function CustomCKEditor({ value, onChange }: Props) {
     }
 
     if (!Editor || !ClassicEditor) {
+        // Fallback editable area when CKEditor fails to load so users can still type
         return (
-            <div className="w-full min-h-[400px] bg-red-50 rounded-md border border-red-200 flex items-center justify-center text-red-500 p-4 text-center">
-                Failed to load the editor. Please refresh the page or contact support.
+            <div className="w-full min-h-[200px] bg-white rounded-md border border-slate-200 p-2">
+                <div className="text-xs text-muted-foreground mb-2">Editor not available — using plain editor</div>
+                <textarea
+                    className="w-full min-h-[200px] p-3 text-base outline-none"
+                    value={value ?? ''}
+                    onChange={(e) => onChange(e.target.value)}
+                    onInput={(e) => onChange((e.target as HTMLTextAreaElement).value)}
+                    placeholder="Start typing your professional email content..."
+                    spellCheck={true}
+                    tabIndex={0}
+                />
             </div>
         )
     }
@@ -80,7 +90,7 @@ export default function CustomCKEditor({ value, onChange }: Props) {
       `}</style>
             <Editor
                 editor={ClassicEditor}
-                data={value}
+                data={value ?? ''}
                 config={{
                     licenseKey: 'GPL',
                     placeholder: 'Start typing your professional email content...',
